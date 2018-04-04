@@ -1,8 +1,13 @@
 import asyncio
 
+import yaml
 import click
 
 from fetcher import SimpleFetcher
+from parser import RegexParser
+
+
+DATABASE_FILE = 'f.yml'
 
 
 @click.group()
@@ -16,8 +21,11 @@ async def grab_handler():
     """
     url = 'https://www.webpagefx.com/tools/emoji-cheat-sheet/'
     fetcher = SimpleFetcher(url=url)
+    parser = RegexParser()
     html = await fetcher.request()
-    # print(html)
+    emoji = parser.parse(html)
+    with open(DATABASE_FILE, 'w') as f:
+        f.write(yaml.dump(emoji, default_flow_style=False))
     await fetcher.close()
 
 
