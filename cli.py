@@ -7,7 +7,8 @@ from fetcher import SimpleFetcher
 from parser import RegexParser
 
 
-DATABASE_FILE = 'f.yml'
+DATABASE_FILE = 'database.yml'
+'.git/hooks/commit-msg'
 
 
 @click.group()
@@ -33,6 +34,23 @@ async def grab_handler():
 def grab():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(grab_handler())
+
+
+@cli.group(name='add')
+def install():
+    pass
+
+
+@install.command(name='local')
+def local_installation():
+    print('Installing for local repo')
+
+
+@install.command(name='global')
+def global_installation():
+    print('Installing globally')
+
+
 
 
 if __name__ == '__main__':
