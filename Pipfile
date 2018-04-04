@@ -9,6 +9,7 @@ name = "pypi"
 
 aiohttp = "*"
 click = "*"
+coloredlogs = "*"
 
 
 [dev-packages]
