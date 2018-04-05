@@ -126,8 +126,10 @@ def remove():
 def local_uninstall():
     git_local_root = os.path.join(os.getcwd(), '.git')
     hook_filepath = os.path.join(git_local_root, 'hooks', HOOK_FILENAME)
+    db_link = os.path.join(git_local_root, 'hooks', DATABASE_FILE)
     if os.path.exists(hook_filepath):
         os.remove(hook_filepath)
+        os.remove(db_link)
         _note('Uninstalled for current repository')
     else:
         _warn('Podmena is not installed for current repository!')
@@ -141,7 +143,7 @@ def local_uninstall():
 def global_uninstall():
     rc = unset_git_global_hooks_path()
     if rc == 0:
-        _info('Deactivate podmena globally')
+        _info('Deactivated podmena globally')
     elif rc == 5:
         _warn('Podmena is not installed globally!')
         sys.exit(1)
