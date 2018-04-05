@@ -1,3 +1,4 @@
+import os
 import logging
 import subprocess
 
@@ -54,3 +55,10 @@ def unset_git_global_hooks_path():
         '--unset',
         'core.hooksPath',
     ])
+
+
+def force_symlink(src, dst):
+    if os.path.exists(dst) and os.path.islink(dst):
+        os.remove(dst)
+
+    os.symlink(src, dst)

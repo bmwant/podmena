@@ -13,6 +13,7 @@ from podmena.utils import (
     _warn,
     _note,
     _info,
+    force_symlink,
     set_git_global_hooks_path,
     unset_git_global_hooks_path,
 )
@@ -67,11 +68,15 @@ def install():
 )
 def local_install():
     git_local_root = os.path.join(os.getcwd(), '.git')
+    local_hooks_path = os.path.join(git_local_root, 'hooks')
     if os.path.exists(git_local_root) and os.path.isdir(git_local_root):
         src_file = os.path.join(RESOURCES_DIR, HOOK_FILENAME)
-        dst_file = os.path.join(git_local_root, 'hooks', HOOK_FILENAME)
+        dst_file = os.path.join(local_hooks_path, HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
+        db_file = os.path.join(RESOURCES_DIR, DATABASE_FILE)
+        db_link = os.path.join(local_hooks_path, DATABASE_FILE)
+        force_symlink(db_file, db_link)
         _note('Successfully installed for current repository!')
     else:
         _warn('Not a git repository')
@@ -99,6 +104,9 @@ def global_install():
         dst_file = os.path.join(global_hooks_path, HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
+        db_file = os.path.join(RESOURCES_DIR, DATABASE_FILE)
+        db_link = os.path.join(global_hooks_path, DATABASE_FILE)
+        force_symlink(db_file, db_link)
         set_git_global_hooks_path(global_hooks_path)
         _note('Installed globally for all repos')
 

@@ -4,8 +4,8 @@ import sys
 import yaml
 import random
 
-
-with open(os.path.join(sys.prefix, 'database.yml')) as f:
+curdir = os.path.dirname(os.path.realpath(__file__))
+with open(os.path.join(curdir, 'database.yml')) as f:
     emoji = yaml.load(f.read())
 
 with open(sys.argv[1]) as f:
