@@ -21,8 +21,9 @@ Activate for current git repository
 ```
 $ podmena add local
 ```
-Activate globally for all repositories
+Activate globally for all repositories (works with git `2.9.1` and above)
 ```
+$ git --version
 $ podmena add global
 ```
 Deactivate it
