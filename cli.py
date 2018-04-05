@@ -9,6 +9,7 @@ import click
 from fetcher import SimpleFetcher
 from parser import RegexParser
 from utils import get_logger, _warn, _note, _info
+from utils import set_git_global_hooks_path, unset_git_global_hooks_path
 
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -78,6 +79,7 @@ def global_install():
         dst_file = os.path.join(global_hooks_path, HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
+        set_git_global_hooks_path(global_hooks_path)
         _note('Installed globally for all repos')
 
 
@@ -100,7 +102,15 @@ def local_uninstall():
 
 @remove.command(name='global')
 def global_uninstall():
-    pass
+    rc = unset_git_global_hooks_path()
+    if rc == 0:
+        _info('Deactivate podmena globally')
+    elif rc == 5:
+        _warn('Podmena is not installed globally!')
+        sys.exit(1)
+    else:
+        _warn('Failed to deactivate')
+        sys.exit(rc)
 
 
 if __name__ == '__main__':

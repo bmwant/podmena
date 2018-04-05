@@ -35,3 +35,22 @@ def _note(message):
 def _info(message):
     click.secho(message, fg='yellow')
 
+
+def set_git_global_hooks_path(hooks_path):
+    subprocess.call([
+        'git',
+        'config',
+        '--global',
+        'core.hooksPath',
+        hooks_path,
+    ])
+
+
+def unset_git_global_hooks_path():
+    return subprocess.call([
+        'git',
+        'config',
+        '--global',
+        '--unset',
+        'core.hooksPath',
+    ])
