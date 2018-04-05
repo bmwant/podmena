@@ -19,6 +19,7 @@ from podmena.utils import (
 
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+RESOURCES_DIR = os.path.join(CURRENT_DIR, 'resources')
 HOOK_FILENAME = 'commit-msg'
 DATABASE_FILE = 'database.yml'
 
@@ -37,7 +38,8 @@ async def grab_handler():
     parser = RegexParser()
     html = await fetcher.request()
     emoji = parser.parse(html)
-    with open(DATABASE_FILE, 'w') as f:
+    database_path = os.path.join(RESOURCES_DIR, DATABASE_FILE)
+    with open(database_path, 'w') as f:
         f.write(yaml.dump(emoji, default_flow_style=False))
     await fetcher.close()
 
@@ -57,7 +59,7 @@ def install():
 def local_install():
     git_local_root = os.path.join(os.getcwd(), '.git')
     if os.path.exists(git_local_root) and os.path.isdir(git_local_root):
-        src_file = os.path.join(CURRENT_DIR, HOOK_FILENAME)
+        src_file = os.path.join(RESOURCES_DIR, HOOK_FILENAME)
         dst_file = os.path.join(git_local_root, 'hooks', HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
@@ -81,7 +83,7 @@ def global_install():
         if not os.path.exists(global_hooks_path):
             os.makedirs(global_hooks_path)
 
-        src_file = os.path.join(CURRENT_DIR, HOOK_FILENAME)
+        src_file = os.path.join(RESOURCES_DIR, HOOK_FILENAME)
         dst_file = os.path.join(global_hooks_path, HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)

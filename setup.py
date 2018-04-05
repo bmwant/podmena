@@ -71,24 +71,20 @@ setup(
     },
 
     package_data={
-        'sample': ['package_data.dat'],
+        'podmena': [
+            'resources/commit-msg',
+            'resources/database.yml',
+        ],
     },
 
-    # To provide executable scripts, use entry points in preference to the
-    # "scripts" keyword. Entry points provide cross-platform support and allow
-    # `pip` to create the appropriate form of executable for the target
-    # platform.
-    #
-    # For example, the following would provide a command called `sample` which
-    # executes the function `main` from this package when invoked:
-    entry_points={  # Optional
+    entry_points={
         'console_scripts': [
-            'podmena=cli',
+            'podmena=podmena.cli:cli',
         ],
     },
 
     project_urls={
         'Blog post': 'https://bmwlog.pp.ua/',
-        'Say Thanks!': 'http://saythanks.io/to/example',
+        'Say Thanks!': 'https://gimmebackmyson.herokuapp.com/',
     },
 )
