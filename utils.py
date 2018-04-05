@@ -34,3 +34,4 @@ def _note(message):
 
 def _info(message):
     click.secho(message, fg='yellow')
+

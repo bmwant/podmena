@@ -47,12 +47,13 @@ def install():
 
 
 @install.command(name='local')
-def local_installation():
+def local_install():
     git_local_root = os.path.join(os.getcwd(), '.git')
     if os.path.exists(git_local_root) and os.path.isdir(git_local_root):
         src_file = os.path.join(CURRENT_DIR, HOOK_FILENAME)
         dst_file = os.path.join(git_local_root, 'hooks', HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
+        os.chmod(dst_file, 0o0775)
         _note('Successfully installed for current repository!')
     else:
         _warn('Not a git repository')
@@ -60,7 +61,7 @@ def local_installation():
 
 
 @install.command(name='global')
-def global_installation():
+def global_install():
     global_hooks_path = os.path.expanduser('~/.podmena/hooks')
     confirm_info = (
         'This will set one global hooks directory for all you repositories.\n'
@@ -76,11 +77,29 @@ def global_installation():
         src_file = os.path.join(CURRENT_DIR, HOOK_FILENAME)
         dst_file = os.path.join(global_hooks_path, HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
+        os.chmod(dst_file, 0o0775)
         _note('Installed globally for all repos')
 
 
 @cli.group(name='rm')
 def remove():
+    pass
+
+
+@remove.command(name='local')
+def local_uninstall():
+    git_local_root = os.path.join(os.getcwd(), '.git')
+    hook_filepath = os.path.join(git_local_root, 'hooks', HOOK_FILENAME)
+    if os.path.exists(hook_filepath):
+        os.remove(hook_filepath)
+        _note('Uninstalled for current repository')
+    else:
+        _warn('Podmena is not installed for current repository!')
+        sys.exit(1)
+
+
+@remove.command(name='global')
+def global_uninstall():
     pass
 
 
