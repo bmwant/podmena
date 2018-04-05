@@ -1,11 +1,11 @@
 ## podmena
 
-Enhance your commit messages with emoji :dress:
+Enhance your commit messages with emoji :cherries:
 
 podmena will automatically add random emoji to every commit message for any
-git repository installed
+git repository installed.
 
-_I will add some screenshot here later_
+![emoji](podmena.png)
 
 873 items in database so far!
 
