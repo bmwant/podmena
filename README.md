@@ -35,4 +35,5 @@ locally as well.
 
 ### Say thanks!
 
-Visit [this page] and donate some money if you enjoy this _crazy_ project!
+Visit [this page](https://gimmebackmyson.herokuapp.com/) 
+and donate some money if you enjoy this _crazy_ project!
