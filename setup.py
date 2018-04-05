@@ -77,6 +77,10 @@ setup(
         ],
     },
 
+    data_files=[
+        ('', ['podmena/resources/database.yml']),
+    ],
+
     entry_points={
         'console_scripts': [
             'podmena=podmena.cli:cli',
