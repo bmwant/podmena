@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
+import sys
 
 
-echo "waaaat"
+print(sys.argv)
