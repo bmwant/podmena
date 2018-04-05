@@ -25,6 +25,9 @@ Deactivate it
 $ podmena rm local
 $ podmena rm global
 ```
+Note that uninstalling globally will not remove hooks from repositories where
+it was installed locally. You need to switch to that directory and uninstall it
+locally as well.
 
 ### See also
 

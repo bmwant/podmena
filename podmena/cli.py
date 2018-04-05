@@ -44,18 +44,27 @@ async def grab_handler():
     await fetcher.close()
 
 
-@cli.command()
+@cli.command(
+    name='update',
+    help='Update database of emoji in case of any changes from remote'
+)
 def grab():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(grab_handler())
 
 
-@cli.group(name='add')
+@cli.group(
+    name='add',
+    help='Activate podmena',
+)
 def install():
     pass
 
 
-@install.command(name='local')
+@install.command(
+    name='local',
+    help='Install podmena for current git repository',
+)
 def local_install():
     git_local_root = os.path.join(os.getcwd(), '.git')
     if os.path.exists(git_local_root) and os.path.isdir(git_local_root):
@@ -69,7 +78,10 @@ def local_install():
         sys.exit(1)
 
 
-@install.command(name='global')
+@install.command(
+    name='global',
+    help='Install podmena globally for every git repository',
+)
 def global_install():
     global_hooks_path = os.path.expanduser('~/.podmena/hooks')
     confirm_info = (
@@ -91,12 +103,18 @@ def global_install():
         _note('Installed globally for all repos')
 
 
-@cli.group(name='rm')
+@cli.group(
+    name='rm',
+    help='Deactivate podmena',
+)
 def remove():
     pass
 
 
-@remove.command(name='local')
+@remove.command(
+    name='local',
+    help='Uninstall podmena for current git repository',
+)
 def local_uninstall():
     git_local_root = os.path.join(os.getcwd(), '.git')
     hook_filepath = os.path.join(git_local_root, 'hooks', HOOK_FILENAME)
@@ -108,7 +126,10 @@ def local_uninstall():
         sys.exit(1)
 
 
-@remove.command(name='global')
+@remove.command(
+    name='global',
+    help='Uninstall podmena on globally',
+)
 def global_uninstall():
     rc = unset_git_global_hooks_path()
     if rc == 0:
