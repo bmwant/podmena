@@ -32,6 +32,8 @@ locally as well.
 ### See also
 
 * [GitHooks](https://githooks.com/)
+* [Atlassian tutorial for git hooks](https://www.atlassian.com/git/tutorials/git-hooks)
+Thanks @kakovskyi working for Atlassian!
 
 ### Say thanks!
 
