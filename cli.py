@@ -6,10 +6,16 @@ import asyncio
 import yaml
 import click
 
-from fetcher import SimpleFetcher
-from parser import RegexParser
-from utils import get_logger, _warn, _note, _info
-from utils import set_git_global_hooks_path, unset_git_global_hooks_path
+from podmena.fetcher import SimpleFetcher
+from podmena.parser import RegexParser
+from podmena.utils import (
+    get_logger,
+    _warn,
+    _note,
+    _info,
+    set_git_global_hooks_path,
+    unset_git_global_hooks_path,
+)
 
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))

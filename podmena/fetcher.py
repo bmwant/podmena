@@ -5,7 +5,7 @@ from http import HTTPStatus
 
 import aiohttp
 
-from utils import get_logger
+from podmena.utils import get_logger
 
 
 class SimpleFetcher(object):
