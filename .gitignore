@@ -97,4 +97,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# editors
 .idea/
