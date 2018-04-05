@@ -1,14 +1,19 @@
 ## podmena
 
+Enhance your commit messages with emoji :dress:
 
+podmena will automatically add random emoji to every commit message for any
+git repository installed
+
+_I will add some screenshot here later_
 
 873 items in database so far!
 
 Credits go to [WebpageFX](https://www.webpagefx.com/tools/emoji-cheat-sheet/) 
 for list of emoji!
 
-
 ### Installation
+
 ```
 $ pip install podmena
 ```
@@ -34,6 +39,7 @@ locally as well.
 * [GitHooks](https://githooks.com/)
 * [Atlassian tutorial for git hooks](https://www.atlassian.com/git/tutorials/git-hooks)
 Thanks [@kakovskyi](https://github.com/kakovskyi) working for Atlassian!
+* [The game of bingo gone horribly wrong](http://lemonparty.club) :lemon:
 
 ### Say thanks!
 
