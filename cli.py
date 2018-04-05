@@ -50,7 +50,10 @@ def install():
 def local_installation():
     git_local_root = os.path.join(os.getcwd(), '.git')
     if os.path.exists(git_local_root) and os.path.isdir(git_local_root):
-        print('Installing')
+        src_file = os.path.join(CURRENT_DIR, HOOK_FILENAME)
+        dst_file = os.path.join(git_local_root, 'hooks', HOOK_FILENAME)
+        shutil.copyfile(src_file, dst_file)
+        _note('Successfully installed for current repository!')
     else:
         _warn('Not a git repository')
         sys.exit(1)
@@ -74,6 +77,11 @@ def global_installation():
         dst_file = os.path.join(global_hooks_path, HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         _note('Installed globally for all repos')
+
+
+@cli.group(name='rm')
+def remove():
+    pass
 
 
 if __name__ == '__main__':
