@@ -1,3 +1,6 @@
+import os
+import sys
+import shutil
 import asyncio
 
 import yaml
@@ -5,10 +8,12 @@ import click
 
 from fetcher import SimpleFetcher
 from parser import RegexParser
+from utils import get_logger, _warn, _note, _info
 
 
+CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+HOOK_FILENAME = 'commit-msg'
 DATABASE_FILE = 'database.yml'
-'.git/hooks/commit-msg'
 
 
 @click.group()
@@ -43,14 +48,32 @@ def install():
 
 @install.command(name='local')
 def local_installation():
-    print('Installing for local repo')
+    git_local_root = os.path.join(os.getcwd(), '.git')
+    if os.path.exists(git_local_root) and os.path.isdir(git_local_root):
+        print('Installing')
+    else:
+        _warn('Not a git repository')
+        sys.exit(1)
 
 
 @install.command(name='global')
 def global_installation():
-    print('Installing globally')
+    global_hooks_path = os.path.expanduser('~/.podmena/hooks')
+    confirm_info = (
+        'This will set one global hooks directory for all you repositories.\n'
+        'This action may deactivate your previous hooks installed per '
+        'repository.\nFor more info see '
+        'https://git-scm.com/docs/git-config#git-config-corehooksPath\n'
+    )
+    _info(confirm_info)
+    if click.confirm('Do you want to continue?', abort=True):
+        if not os.path.exists(global_hooks_path):
+            os.makedirs(global_hooks_path)
 
-
+        src_file = os.path.join(CURRENT_DIR, HOOK_FILENAME)
+        dst_file = os.path.join(global_hooks_path, HOOK_FILENAME)
+        shutil.copyfile(src_file, dst_file)
+        _note('Installed globally for all repos')
 
 
 if __name__ == '__main__':

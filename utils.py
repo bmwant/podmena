@@ -1,4 +1,5 @@
 import logging
+import click
 import coloredlogs
 
 
@@ -19,3 +20,15 @@ def get_logger(name='default', level=logging.DEBUG):
     coloredlogs.install(level=level, logger=logger, fmt=FORMAT)
 
     return logger
+
+
+def _warn(message):
+    click.secho(message, fg='red')
+
+
+def _note(message):
+    click.secho(message, fg='green')
+
+
+def _info(message):
+    click.secho(message, fg='yellow')
