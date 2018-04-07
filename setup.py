@@ -34,12 +34,8 @@ setup(
 
     # For a list of valid classifiers, see
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
-    classifiers=[  # Optional
-        # How mature is this project? Common values are
-        #   3 - Alpha
-        #   4 - Beta
-        #   5 - Production/Stable
-        'Development Status :: 3 - Alpha',
+    classifiers=[
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Framework :: AsyncIO',
         'Intended Audience :: Developers',
@@ -60,13 +56,13 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
 
     install_requires=[
-        'coloredlogs>=9.0',  # not needed at all
         'click>=6.7',  # hi, mitshuhiko
     ],
 
     extras_require={
         'dev': [
             'aiohttp>=3.1.1',
+            'coloredlogs>=9.0',
             'twine>=1.11.0',
         ],
     },
@@ -74,12 +70,12 @@ setup(
     package_data={
         'podmena': [
             'resources/commit-msg',
-            'resources/database.yml',
+            'resources/database.txt',
         ],
     },
 
     data_files=[
-        ('', ['podmena/resources/database.yml']),
+        ('', ['podmena/resources/database.txt']),
     ],
 
     entry_points={
