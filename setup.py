@@ -24,7 +24,7 @@ setup(
     name='podmena',
 
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.2.0',
+    version='0.3.0',
     description='Enhance your git commit messages with emoji',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -60,14 +60,15 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
 
     install_requires=[
-        'aiohttp>=3.1.1',  # why not?
         'coloredlogs>=9.0',  # not needed at all
         'click>=6.7',  # hi, mitshuhiko
-        'PyYAML==3.12',  # when json is not enough
     ],
 
     extras_require={
-        'dev': ['twine>=1.11.0'],
+        'dev': [
+            'aiohttp>=3.1.1',
+            'twine>=1.11.0',
+        ],
     },
 
     package_data={
