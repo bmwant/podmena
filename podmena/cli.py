@@ -3,13 +3,11 @@ import sys
 import shutil
 import asyncio
 
-import yaml
 import click
 
 from podmena.fetcher import SimpleFetcher
 from podmena.parser import RegexParser
 from podmena.utils import (
-    get_logger,
     _warn,
     _note,
     _info,
@@ -22,7 +20,7 @@ from podmena.utils import (
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 RESOURCES_DIR = os.path.join(CURRENT_DIR, 'resources')
 HOOK_FILENAME = 'commit-msg'
-DATABASE_FILE = 'database.yml'
+DATABASE_FILE = 'database.txt'
 
 
 @click.group()
@@ -41,7 +39,7 @@ async def grab_handler():
     emoji = parser.parse(html)
     database_path = os.path.join(RESOURCES_DIR, DATABASE_FILE)
     with open(database_path, 'w') as f:
-        f.write(yaml.dump(emoji, default_flow_style=False))
+        f.write('\n'.join(emoji))
     await fetcher.close()
 
 
