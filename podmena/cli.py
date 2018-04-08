@@ -1,7 +1,6 @@
 import os
 import sys
 import shutil
-import asyncio
 
 import click
 
@@ -28,28 +27,19 @@ def cli():
     pass
 
 
-async def grab_handler():
-    """
-    Update database with new set of emoji if any.
-    """
-    url = 'https://www.webpagefx.com/tools/emoji-cheat-sheet/'
-    fetcher = SimpleFetcher(url=url)
-    parser = RegexParser()
-    html = await fetcher.request()
-    emoji = parser.parse(html)
-    database_path = os.path.join(RESOURCES_DIR, DATABASE_FILE)
-    with open(database_path, 'w') as f:
-        f.write('\n'.join(emoji))
-    await fetcher.close()
-
-
 @cli.command(
     name='update',
     help='Update database of emoji in case of any changes from remote'
 )
 def grab():
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(grab_handler())
+    url = 'https://www.webpagefx.com/tools/emoji-cheat-sheet/'
+    fetcher = SimpleFetcher(url=url)
+    parser = RegexParser()
+    html = fetcher.request()
+    emoji = parser.parse(html)
+    database_path = os.path.join(RESOURCES_DIR, DATABASE_FILE)
+    with open(database_path, 'w') as f:
+        f.write('\n'.join(emoji))
 
 
 @cli.group(
@@ -130,7 +120,7 @@ def local_uninstall():
         os.remove(db_link)
         _note('Uninstalled for current repository')
     else:
-        _warn('Podmena is not installed for current repository!')
+        _warn('podmena is not installed for current repository!')
         sys.exit(1)
 
 
@@ -143,7 +133,7 @@ def global_uninstall():
     if rc == 0:
         _info('Deactivated podmena globally')
     elif rc == 5:
-        _warn('Podmena is not installed globally!')
+        _warn('podmena is not installed globally!')
         sys.exit(1)
     else:
         _warn('Failed to deactivate')
