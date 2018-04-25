@@ -26,6 +26,18 @@ def set_git_global_hooks_path(hooks_path):
     ])
 
 
+def get_git_config_hooks_value():
+    try:
+        return subprocess.check_output([
+            'git',
+            'config',
+            '--get',
+            'core.hooksPath',
+        ]).decode().strip()
+    except subprocess.CalledProcessError:
+        pass
+
+
 def unset_git_global_hooks_path():
     return subprocess.call([
         'git',
@@ -34,6 +46,17 @@ def unset_git_global_hooks_path():
         '--unset',
         'core.hooksPath',
     ])
+
+
+def get_git_root_dir():
+    try:
+        return subprocess.check_output([
+            'git',
+            'rev-parse',
+            '--show-toplevel',
+        ]).decode().strip()
+    except subprocess.CalledProcessError:
+        pass
 
 
 def force_symlink(src, dst):

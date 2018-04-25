@@ -11,7 +11,9 @@ from podmena.utils import (
     _note,
     _info,
     force_symlink,
+    get_git_root_dir,
     set_git_global_hooks_path,
+    get_git_config_hooks_value,
     unset_git_global_hooks_path,
 )
 
@@ -26,6 +28,40 @@ DATABASE_FILE = 'database.txt'
 @click.version_option()
 def cli():
     pass
+
+
+@cli.command(
+    name='status',
+    help='Shows whether podmena is installed for current repository '
+         'or globally'
+)
+def status():
+    active = False
+
+    git_root_dir = get_git_root_dir()
+    if git_root_dir is not None:
+        local_hooks_path = os.path.join(git_root_dir, '.git', 'hooks')
+        database_path = os.path.join(local_hooks_path, DATABASE_FILE)
+        hook_path = os.path.join(local_hooks_path, HOOK_FILENAME)
+        if os.path.exists(database_path) and os.path.exists(hook_path):
+            _note('podmena is activated for current repository!')
+            active = True
+
+    global_hooks_path = os.path.expanduser('~/.podmena/hooks')
+    global_database_path = os.path.join(global_hooks_path, DATABASE_FILE)
+    global_hook_path = os.path.join(global_hooks_path, HOOK_FILENAME)
+    git_global_hooks_config = get_git_config_hooks_value()
+
+    if (os.path.exists(global_database_path) and
+        os.path.exists(global_hook_path) and
+        git_global_hooks_config == global_hooks_path
+    ):
+        _note('podmena is activated globally!')
+        active = True
+
+    if not active:
+        _warn('podmena is not activated neither for current repository '
+              'nor globally!')
 
 
 @cli.command(
