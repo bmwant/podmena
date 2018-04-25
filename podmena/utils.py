@@ -54,7 +54,7 @@ def get_git_root_dir():
             'git',
             'rev-parse',
             '--show-toplevel',
-        ]).decode().strip()
+        ], stderr=subprocess.STDOUT).decode().strip()
     except subprocess.CalledProcessError:
         pass
 
