@@ -7,14 +7,12 @@ name = "pypi"
 
 [packages]
 
-aiohttp = "*"
 click = "*"
-coloredlogs = "*"
-pyyaml = "*"
 twine = "*"
 
 
 [dev-packages]
+
 
 
 [requires]

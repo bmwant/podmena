@@ -61,8 +61,6 @@ setup(
 
     extras_require={
         'dev': [
-            'aiohttp>=3.1.1',
-            'coloredlogs>=9.0',
             'twine>=1.11.0',
         ],
     },
