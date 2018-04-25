@@ -23,6 +23,7 @@ DATABASE_FILE = 'database.txt'
 
 
 @click.group()
+@click.version_option()
 def cli():
     pass
 
