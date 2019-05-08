@@ -48,7 +48,7 @@ locally as well.
 * [GitHooks](https://githooks.com/)
 * [Atlassian tutorial for git hooks](https://www.atlassian.com/git/tutorials/git-hooks)
 Thanks [@kakovskyi](https://github.com/kakovskyi) working for Atlassian!
-* [The game of bingo gone horribly wrong](http://lemonparty.club) :lemon:
+* It's a wrong place to search if you are looking for lemonparty :lemon: club
 
 ### Say thanks!
 
