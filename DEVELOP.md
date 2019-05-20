@@ -1,3 +1,17 @@
+### Developing
+
+Install Poetry and project's dependencies
+
+```bash
+$ poetry install
+```
+
+Add new feature and launch tests
+
+```bash
+$ 
+```
+
 ### Releasing
 
 ```
