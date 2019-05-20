@@ -20,13 +20,14 @@ Bump a version with features you want to include and build a package
 $ poetry version  # patch version update
 $ poetry version minor
 $ poetry version major  # choose one based on semver rules
-$ poetry build
+$ poetry build  # better to use the command below
+$ make build
 ```
 
 Upload package to GitHub and PyPI
 
 ```bash
-$ git tag -a v0.4.1 -m "Version 0.4.1" 
+$ git tag -a v0.4.2 -m "Version 0.4.2" 
 $ git push --tags
 $ poetry publish
 ```

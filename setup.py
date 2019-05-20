@@ -24,7 +24,7 @@ setup(
     name='podmena',
 
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.4.1',
+    version='0.4.2',
     description='Enhance your git commit messages with emoji',
     long_description=long_description,
     long_description_content_type='text/markdown',

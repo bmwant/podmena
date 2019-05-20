@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "podmena"
-version = "0.4.1"
+version = "0.4.2"
 description = "Enhance your commit messages with emoji"
 authors = ["Misha Behersky <bmwant@gmail.com>"]
-license = "MIT"
+license = "Unlicense"
 
 [tool.poetry.dependencies]
 python = "^3.5"

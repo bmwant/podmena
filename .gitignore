@@ -99,4 +99,5 @@ venv.bak/
 .mypy_cache/
 
 # editors
+.DS_Store
 .idea/
