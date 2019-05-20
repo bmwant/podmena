@@ -21,7 +21,7 @@ from podmena.utils import (
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 RESOURCES_DIR = os.path.join(CURRENT_DIR, 'resources')
 HOOK_FILENAME = 'commit-msg'
-DATABASE_FILE = 'database.txt'
+DATABASE_FILE = 'emoji-db'
 
 
 @click.group()
@@ -77,7 +77,7 @@ def grab():
     database_path = os.path.join(RESOURCES_DIR, DATABASE_FILE)
     with open(database_path, 'w') as f:
         f.write('\n'.join(emoji))
-    _note('Dowloaded {} emoji to database'.format(len(emoji)))
+    _note('Downloaded {} emoji to database'.format(len(emoji)))
 
 
 @cli.group(

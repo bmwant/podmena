@@ -9,7 +9,7 @@ $ poetry install
 Add new feature and launch tests
 
 ```bash
-$ 
+$ poetry run pytest -sv tests
 ```
 
 ### Releasing

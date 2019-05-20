@@ -1,5 +1,3 @@
-
-
 release:
 	@rm -rf dist/
 	@rm -rf build/

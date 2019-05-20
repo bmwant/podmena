@@ -68,12 +68,12 @@ setup(
     package_data={
         'podmena': [
             'resources/commit-msg',
-            'resources/database.txt',
+            'resources/emoji-db',
         ],
     },
 
     data_files=[
-        ('', ['podmena/resources/database.txt']),
+        ('', ['podmena/resources/emoji-db']),
     ],
 
     entry_points={
