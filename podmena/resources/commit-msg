@@ -4,7 +4,7 @@ import sys
 import random
 
 curdir = os.path.dirname(os.path.realpath(__file__))
-with open(os.path.join(curdir, 'database.txt')) as f:
+with open(os.path.join(curdir, 'emoji-db')) as f:
     emoji = f.readlines()
 
 with open(sys.argv[1]) as f:

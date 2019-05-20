@@ -24,7 +24,7 @@ setup(
     name='podmena',
 
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.4.0',
+    version='0.4.1',
     description='Enhance your git commit messages with emoji',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -37,7 +37,6 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
-        'Framework :: AsyncIO',
         'Intended Audience :: Developers',
         'Topic :: Utilities',
         'Topic :: Software Development :: Build Tools',
@@ -59,21 +58,15 @@ setup(
         'click>=6.7',  # hi, mitshuhiko
     ],
 
-    extras_require={
-        'dev': [
-            'twine>=1.11.0',
-        ],
-    },
-
     package_data={
         'podmena': [
             'resources/commit-msg',
-            'resources/database.txt',
+            'resources/emoji-db',
         ],
     },
 
     data_files=[
-        ('', ['podmena/resources/database.txt']),
+        ('', ['podmena/resources/emoji-db']),
     ],
 
     entry_points={
