@@ -14,10 +14,21 @@ $ poetry run pytest -sv tests
 
 ### Releasing
 
+Bump a version with features you want to include and build a package
+
+```bash
+$ poetry version  # patch version update
+$ poetry version minor
+$ poetry version major  # choose one based on semver rules
+$ poetry build
 ```
-$ git tag -a v0.4.1 -m "tagging 0.4.1" 
+
+Upload package to GitHub and PyPI
+
+```bash
+$ git tag -a v0.4.1 -m "Version 0.4.1" 
 $ git push --tags
-$ make release
+$ poetry publish
 ```
 
 ### TODO
