@@ -1,6 +1,6 @@
 ### Developing
 
-Install Poetry and project's dependencies
+Install [Poetry](https://poetry.eustace.io/) and project's dependencies
 
 ```bash
 $ poetry install

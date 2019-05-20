@@ -77,6 +77,7 @@ def grab():
     database_path = os.path.join(RESOURCES_DIR, DATABASE_FILE)
     with open(database_path, 'w') as f:
         f.write('\n'.join(emoji))
+    _note('Dowloaded {} emoji to database'.format(len(emoji)))
 
 
 @cli.group(
