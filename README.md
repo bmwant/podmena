@@ -1,6 +1,6 @@
 ## podmena
 
-Enhance your commit messages with emoji :cherries:
+Enhance your commit messages with emoji 🍒
 
 podmena will automatically add random emoji to every commit message for any
 git repository installed.
@@ -9,7 +9,7 @@ git repository installed.
 
 873 items in database so far!
 
-Credits go to [WebpageFX](https://www.webpagefx.com/tools/emoji-cheat-sheet/) 
+Credits go to [WebpageFX](https://www.webpagefx.com/tools/emoji-cheat-sheet/)
 for list of emoji!
 
 ### Installation
@@ -17,40 +17,53 @@ for list of emoji!
 ```bash
 $ pip install podmena
 ```
-Activate for current git repository
+
+* Activate for current git repository
+
 ```bash
 $ podmena add local
 ```
-Activate globally for all repositories (works with git `2.9.1` and above)
+
+* Activate globally for all repositories (works with git `2.9.1` and above)
+
 ```bash
 $ git --version
 $ podmena add global
 ```
-Deactivate it
+
+* Deactivate it
 ```bash
 $ podmena rm local
 $ podmena rm global
 ```
-Check current status if you not sure
+
+* Check current status if you not sure
+
 ```bash
 $ podmena status
 ```
-And finally `podmena --version` and `podmena --help` in case you need more 
+
+* And finally `podmena --version` and `podmena --help` in case you need more
 details.
 
+> **NOTE:** uninstalling globally will not remove hooks from repositories where
+it was installed locally. You need to switch to that directory manually and uninstall it locally as well.
 
-Note that uninstalling globally will not remove hooks from repositories where
-it was installed locally. You need to switch to that directory and uninstall it
-locally as well.
+### Contribute
+
+Setup your local development environment as described in [DEVELOP.md](DEVELOP.md) and feel free to create a pull request with a new feature.
+
+### Releases
+
+See [CHANGELOG.md](CHANGELOG.md) for the new features included within each release.
 
 ### See also
 
 * [GitHooks](https://githooks.com/)
 * [Atlassian tutorial for git hooks](https://www.atlassian.com/git/tutorials/git-hooks)
 Thanks [@kakovskyi](https://github.com/kakovskyi) working for Atlassian!
-* It's a wrong place to search if you are looking for lemonparty :lemon: club
+* It's a wrong place to search if you are looking for 🍋 lemonparty.fun 🍋 club
 
 ### Say thanks!
 
-Visit [this page](https://gimmebackmyson.herokuapp.com/) 
-and donate some money if you enjoy this _crazy_ project!
+🐶 `D7DA74qzZUyh9cctCxWovPTEovUSjGzL2S` this is [Dogecoin](https://dogecoin.com/) wallet to support the project.
