@@ -31,8 +31,3 @@ $ git tag -a v0.4.2 -m "Version 0.4.2"
 $ git push --tags
 $ poetry publish
 ```
-
-### TODO
-
-* Command to display current status
-* Show update diff/total number of emoji
