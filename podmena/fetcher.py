@@ -15,10 +15,10 @@ class SimpleFetcher(object):
     def request(self, url=None):
         if url is None:
             url = self.url
-        _info(f'Requesting {url}')
+        _info(f"Requesting {url}")
 
         req = urllib.request.Request(url)
         with contextlib.closing(urllib.request.urlopen(req)) as resp:
             if resp.status != HTTPStatus.OK:
-                raise RuntimeError('Got wrong status %s' % resp.status)
-            return resp.read().decode('utf-8')
+                raise RuntimeError("Got wrong status %s" % resp.status)
+            return resp.read().decode("utf-8")
