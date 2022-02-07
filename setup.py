@@ -45,6 +45,10 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Programming Language :: Unix Shell",
     ],
     keywords="git hook fun emoji commit",
@@ -68,6 +72,5 @@ setup(
     },
     project_urls={
         "Blog post": "https://bmwlog.pp.ua/",
-        "Say Thanks!": "https://gimmebackmyson.herokuapp.com/",
     },
 )

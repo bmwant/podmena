@@ -1,6 +1,6 @@
-### Developing
+### Development
 
-Install [Poetry](https://poetry.eustace.io/) and project's dependencies
+Install [Poetry](https://python-poetry.org/) and project's dependencies
 
 ```bash
 $ poetry install
@@ -27,7 +27,7 @@ $ make build
 Upload package to GitHub and PyPI
 
 ```bash
-$ git tag -a v0.4.2 -m "Version 0.4.2" 
+$ git tag -a v0.4.2 -m "Version 0.4.2"
 $ git push --tags
 $ poetry publish
 ```
