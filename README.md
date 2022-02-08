@@ -28,7 +28,9 @@ $ podmena add local
 ```
 
 You can also replace `add` with a different alias
+
 `activate` / `enable` / `install` / `on`
+
 e.g. `podmena enable local`
 
 * Activate globally for all repositories (works with git `2.9.1` and above)
@@ -45,7 +47,9 @@ $ podmena rm global
 ```
 
 You can replace `rm` with any of these available aliases
+
 `remove` / `delete` / `deactivate` / `disable` / `off` / `uninstall`
+
 e.g. `podmena deactivate local`
 
 * Check current status if you not sure
