@@ -6,6 +6,7 @@ import click
 
 from podmena.fetcher import SimpleFetcher
 from podmena.parser import RegexParser
+from podmena.group import AliasedGroup
 from podmena.utils import (
     _warn,
     _note,
@@ -24,7 +25,7 @@ HOOK_FILENAME = "commit-msg"
 DATABASE_FILE = "emoji-db"
 
 
-@click.group()
+@click.group(cls=AliasedGroup)
 @click.version_option()
 def cli():
     pass
@@ -36,7 +37,6 @@ def cli():
 )
 def status():
     active = False
-
     git_root_dir = get_git_root_dir()
     if git_root_dir is not None:
         local_hooks_path = os.path.join(git_root_dir, ".git", "hooks")
@@ -81,7 +81,7 @@ def grab():
 
 
 @cli.group(
-    name="add",
+    name=("add", "activate", "enable", "install", "on"),
     help="Activate podmena",
 )
 def install():
@@ -138,7 +138,7 @@ def global_install():
 
 
 @cli.group(
-    name="rm",
+    name=("rm", "remove", "delete", "deactivate", "disable", "off", "uninstall"),
     help="Deactivate podmena",
 )
 def remove():
@@ -164,7 +164,7 @@ def local_uninstall():
 
 @remove.command(
     name="global",
-    help="Uninstall podmena on globally",
+    help="Uninstall podmena globally",
 )
 def global_uninstall():
     rc = unset_git_global_hooks_path()
