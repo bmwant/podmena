@@ -20,8 +20,7 @@ Bump a version with features you want to include and build a package
 $ poetry version  # patch version update
 $ poetry version minor
 $ poetry version major  # choose one based on semver rules
-$ poetry build  # better to use the command below
-$ make build
+$ poetry build
 ```
 
 Upload package to GitHub and PyPI
