@@ -60,9 +60,7 @@ def status():
         active = True
 
     if not active:
-        _warn(
-            "podmena is not activated neither for current repository nor globally!"
-        )
+        _warn("podmena is not activated neither for current repository nor globally!")
 
 
 @cli.command(
