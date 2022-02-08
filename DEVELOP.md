@@ -17,7 +17,7 @@ $ poetry run pytest -sv tests
 Bump a version with features you want to include and build a package
 
 ```bash
-$ poetry version  # patch version update
+$ poetry version patch # patch version update
 $ poetry version minor
 $ poetry version major  # choose one based on semver rules
 $ poetry build

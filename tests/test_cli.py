@@ -27,3 +27,7 @@ def test_local_install():
 
 def test_global_install():
     pass
+
+
+def test_one_more_thing():
+    pass
