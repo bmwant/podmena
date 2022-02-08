@@ -8,7 +8,7 @@ Enhance your commit messages with emoji 🍒
 podmena will automatically add random emoji to every commit message for any
 git repository installed.
 
-![emoji](podmena.png)
+![emoji](https://github.com/bmwant/podmena/blob/main/podmena.png)
 
 873 items in database so far!
 
@@ -66,11 +66,11 @@ it was installed locally. You need to switch to that directory manually and unin
 
 ### Contribute
 
-See [DEVELOP.md](DEVELOP.md) to setup your local development environment and feel free to create a pull request with a new feature.
+See [DEVELOP.md](https://github.com/bmwant/podmena/blob/main/DEVELOP.md) to setup your local development environment and feel free to create a pull request with a new feature.
 
 ### Releases
 
-See [CHANGELOG.md](CHANGELOG.md) for the new features included within each release.
+See [CHANGELOG.md](https://github.com/bmwant/podmena/blob/main/CHANGELOG.md) for the new features included within each release.
 
 ### See also
 
