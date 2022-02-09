@@ -101,7 +101,7 @@ def local_install():
         db_file = os.path.join(RESOURCES_DIR, DATABASE_FILE)
         db_link = os.path.join(local_hooks_path, DATABASE_FILE)
         force_symlink(db_file, db_link)
-        _note("Successfully installed for current repository!")
+        _note("✨ 🍒 ✨ Installed for current repository!", bold=True)
     else:
         _warn("Not a git repository")
         sys.exit(1)
@@ -114,7 +114,7 @@ def local_install():
 def global_install():
     global_hooks_path = os.path.expanduser("~/.podmena/hooks")
     confirm_info = (
-        "This will set one global hooks directory for all you repositories.\n"
+        "This will set a single global hooks directory for all your repositories.\n"
         "This action may deactivate your previous hooks installed per "
         "repository.\nFor more info see "
         "https://git-scm.com/docs/git-config#git-config-corehooksPath\n"
@@ -132,7 +132,7 @@ def global_install():
         db_link = os.path.join(global_hooks_path, DATABASE_FILE)
         force_symlink(db_file, db_link)
         set_git_global_hooks_path(global_hooks_path)
-        _note("Installed globally for all repos")
+        _note("✨ 🍒 ✨ Installed globally for all repositories!", bold=True)
 
 
 @cli.group(

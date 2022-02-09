@@ -4,16 +4,16 @@ import subprocess
 import click
 
 
-def _warn(message):
-    click.secho(message, fg="red")
+def _warn(message, **kwargs):
+    click.secho(message, fg="red", **kwargs)
 
 
-def _note(message):
-    click.secho(message, fg="green")
+def _note(message, **kwargs):
+    click.secho(message, fg="green", **kwargs)
 
 
-def _info(message):
-    click.secho(message, fg="yellow")
+def _info(message, **kwargs):
+    click.secho(message, fg="yellow", **kwargs)
 
 
 def set_git_global_hooks_path(hooks_path):
