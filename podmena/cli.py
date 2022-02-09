@@ -154,7 +154,7 @@ def local_uninstall():
     if os.path.exists(hook_filepath):
         os.remove(hook_filepath)
         os.remove(db_link)
-        _note("Uninstalled for current repository")
+        _info("💥 🚫 💥 Uninstalled for current repository.", bold=True)
     else:
         _warn("podmena is not installed for current repository!")
         sys.exit(1)
@@ -167,7 +167,7 @@ def local_uninstall():
 def global_uninstall():
     rc = unset_git_global_hooks_path()
     if rc == 0:
-        _info("Deactivated podmena globally")
+        _info("💥 🚫 💥 Deactivated podmena globally.", bold=True)
     elif rc == 5:
         _warn("podmena is not installed globally!")
         sys.exit(1)
