@@ -4,6 +4,7 @@ import shutil
 
 import click
 
+from podmena import config
 from podmena.fetcher import SimpleFetcher
 from podmena.parser import RegexParser
 from podmena.group import AliasedGroup
@@ -17,12 +18,6 @@ from podmena.utils import (
     get_git_config_hooks_value,
     unset_git_global_hooks_path,
 )
-
-
-CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
-RESOURCES_DIR = os.path.join(CURRENT_DIR, "resources")
-HOOK_FILENAME = "commit-msg"
-DATABASE_FILE = "emoji-db"
 
 
 @click.group(cls=AliasedGroup)
@@ -72,7 +67,7 @@ def grab():
     parser = RegexParser()
     html = fetcher.request()
     emoji = parser.parse(html)
-    database_path = os.path.join(RESOURCES_DIR, DATABASE_FILE)
+    database_path = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
     with open(database_path, "w") as f:
         f.write("\n".join(emoji))
     _note("Downloaded {} emoji to database".format(len(emoji)))
@@ -81,9 +76,13 @@ def grab():
 @cli.group(
     name=("add", "activate", "enable", "install", "on"),
     help="Activate podmena",
+    invoke_without_command=True,
 )
-def install():
-    pass
+@click.pass_context
+def install(ctx):
+    if ctx.invoked_subcommand is None:
+        # Install locally by default
+        ctx.forward(local_install)
 
 
 @install.command(
@@ -94,12 +93,12 @@ def local_install():
     git_local_root = os.path.join(os.getcwd(), ".git")
     local_hooks_path = os.path.join(git_local_root, "hooks")
     if os.path.exists(git_local_root) and os.path.isdir(git_local_root):
-        src_file = os.path.join(RESOURCES_DIR, HOOK_FILENAME)
-        dst_file = os.path.join(local_hooks_path, HOOK_FILENAME)
+        src_file = os.path.join(config.RESOURCES_DIR, config.HOOK_FILENAME)
+        dst_file = os.path.join(local_hooks_path, config.HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
-        db_file = os.path.join(RESOURCES_DIR, DATABASE_FILE)
-        db_link = os.path.join(local_hooks_path, DATABASE_FILE)
+        db_file = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
+        db_link = os.path.join(local_hooks_path, config.DATABASE_FILE)
         force_symlink(db_file, db_link)
         _note("✨ 🍒 ✨ Installed for current repository!", bold=True)
     else:
@@ -124,12 +123,12 @@ def global_install():
         if not os.path.exists(global_hooks_path):
             os.makedirs(global_hooks_path)
 
-        src_file = os.path.join(RESOURCES_DIR, HOOK_FILENAME)
-        dst_file = os.path.join(global_hooks_path, HOOK_FILENAME)
+        src_file = os.path.join(config.RESOURCES_DIR, config.HOOK_FILENAME)
+        dst_file = os.path.join(global_hooks_path, config.HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
-        db_file = os.path.join(RESOURCES_DIR, DATABASE_FILE)
-        db_link = os.path.join(global_hooks_path, DATABASE_FILE)
+        db_file = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
+        db_link = os.path.join(global_hooks_path, config.DATABASE_FILE)
         force_symlink(db_file, db_link)
         set_git_global_hooks_path(global_hooks_path)
         _note("✨ 🍒 ✨ Installed globally for all repositories!", bold=True)
@@ -138,9 +137,13 @@ def global_install():
 @cli.group(
     name=("rm", "remove", "delete", "deactivate", "disable", "off", "uninstall"),
     help="Deactivate podmena",
+    invoke_without_command=True,
 )
-def remove():
-    pass
+@click.pass_context
+def remove(ctx):
+    if ctx.invoked_subcommand is None:
+        # Remove locally by default
+        ctx.forward(local_uninstall)
 
 
 @remove.command(
@@ -149,8 +152,8 @@ def remove():
 )
 def local_uninstall():
     git_local_root = os.path.join(os.getcwd(), ".git")
-    hook_filepath = os.path.join(git_local_root, "hooks", HOOK_FILENAME)
-    db_link = os.path.join(git_local_root, "hooks", DATABASE_FILE)
+    hook_filepath = os.path.join(git_local_root, "hooks", config.HOOK_FILENAME)
+    db_link = os.path.join(git_local_root, "hooks", config.DATABASE_FILE)
     if os.path.exists(hook_filepath):
         os.remove(hook_filepath)
         os.remove(db_link)
