@@ -2,8 +2,8 @@ import os
 
 from click.testing import CliRunner
 
+from podmena import config
 from podmena.cli import install
-from podmena.cli import HOOK_FILENAME, DATABASE_FILE
 
 
 def test_local_install():
@@ -11,23 +11,23 @@ def test_local_install():
     result = runner.invoke(install, ["local"])
 
     assert result.exit_code == 0
-    assert result.output == "Successfully installed for current repository!\n"
+    assert result.output == "✨ 🍒 ✨ Installed for current repository!\n"
 
     hook_file_path = os.path.join(
         os.getcwd(),
         ".git",
         "hooks",
-        HOOK_FILENAME,
+        config.HOOK_FILENAME,
     )
     assert os.path.exists(hook_file_path)
 
-    db_file_path = os.path.join(os.getcwd(), ".git", "hooks", DATABASE_FILE)
+    db_file_path = os.path.join(os.getcwd(), ".git", "hooks", config.DATABASE_FILE)
     assert os.path.exists(db_file_path)
 
 
-def test_global_install():
+def test_local_uninstall():
     pass
 
 
-def test_one_more_thing():
+def test_global_install():
     pass
