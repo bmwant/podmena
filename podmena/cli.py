@@ -36,15 +36,15 @@ def status():
     git_root_dir = get_git_root_dir()
     if git_root_dir is not None:
         local_hooks_path = os.path.join(git_root_dir, ".git", "hooks")
-        database_path = os.path.join(local_hooks_path, DATABASE_FILE)
-        hook_path = os.path.join(local_hooks_path, HOOK_FILENAME)
+        database_path = os.path.join(local_hooks_path, config.DATABASE_FILE)
+        hook_path = os.path.join(local_hooks_path, config.HOOK_FILENAME)
         if os.path.exists(database_path) and os.path.exists(hook_path):
-            _note("podmena is activated for current repository!")
+            _note("podmena is activated for current repository.")
             active = True
 
     global_hooks_path = os.path.expanduser("~/.podmena/hooks")
-    global_database_path = os.path.join(global_hooks_path, DATABASE_FILE)
-    global_hook_path = os.path.join(global_hooks_path, HOOK_FILENAME)
+    global_database_path = os.path.join(global_hooks_path, config.DATABASE_FILE)
+    global_hook_path = os.path.join(global_hooks_path, config.HOOK_FILENAME)
     git_global_hooks_config = get_git_config_hooks_value()
 
     if (
@@ -52,11 +52,11 @@ def status():
         and os.path.exists(global_hook_path)
         and git_global_hooks_config == global_hooks_path
     ):
-        _note("podmena is activated globally!")
+        _note("podmena is activated globally.")
         active = True
 
     if not active:
-        _warn("podmena is not activated neither for current repository nor globally!")
+        _warn("🍄 podmena is not activated neither for current repository nor globally.")
 
 
 @cli.command(
@@ -103,7 +103,7 @@ def local_install():
         force_symlink(db_file, db_link)
         _note("✨ 🍒 ✨ Installed for current repository!", bold=True)
     else:
-        _warn("Not a git repository")
+        _warn("🍄 Not a git repository.")
         sys.exit(1)
 
 
@@ -160,7 +160,7 @@ def local_uninstall():
         safe_delete(db_link)
         _info("💥 🚫 💥 Uninstalled for current repository.", bold=True)
     else:
-        _warn("podmena is not installed for current repository.")
+        _warn("🍄 podmena is not installed for current repository.")
         sys.exit(1)
 
 
@@ -173,10 +173,10 @@ def global_uninstall():
     if rc == 0:
         _info("💥 🚫 💥 Deactivated podmena globally.", bold=True)
     elif rc == 5:
-        _warn("podmena is not installed globally.")
+        _warn("🍄 podmena is not installed globally.")
         sys.exit(1)
     else:
-        _warn("Failed to deactivate.")
+        _warn("🍄 Failed to deactivate.")
         sys.exit(rc)
 
 

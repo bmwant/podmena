@@ -10,6 +10,16 @@ Add new feature and launch tests
 
 ```bash
 $ poetry run pytest -sv tests
+# or
+$ make tests
+```
+
+Install git hooks for the automatic linting and code formatting with [pre-commit](https://pre-commit.com/)
+
+```bash
+$ pre-commit install
+$ pre-commit run --all-files # to initialize for the first time
+$ pre-commit run flake8 # run a hook individually
 ```
 
 ### Releasing

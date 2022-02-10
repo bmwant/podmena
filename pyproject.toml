@@ -39,6 +39,9 @@ podmena = 'podmena.cli:cli'
 [tool.poetry.urls]
 "Blog post" = "https://bmwlog.pp.ua/"
 
+[tool.black]
+line-length = 88
+
 [build-system]
 requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
