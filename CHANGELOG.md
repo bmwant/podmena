@@ -4,6 +4,7 @@
 * Allow to run `activate` / `deactivate` commands without arguments (`local` installation is a default)
 * Proper deactivation for corrupted setup
 * Add more unittests
+* Deprecate `update` command
 
 ## 0.5.1
 

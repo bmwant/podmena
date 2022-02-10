@@ -5,8 +5,6 @@ import shutil
 import click
 
 from podmena import config
-from podmena.fetcher import SimpleFetcher
-from podmena.parser import RegexParser
 from podmena.group import AliasedGroup
 from podmena.utils import (
     _warn,
@@ -63,15 +61,7 @@ def status():
     name="update", help="Update database of emoji in case of any changes from remote"
 )
 def grab():
-    url = "https://www.webpagefx.com/tools/emoji-cheat-sheet/"
-    fetcher = SimpleFetcher(url=url)
-    parser = RegexParser()
-    html = fetcher.request()
-    emoji = parser.parse(html)
-    database_path = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
-    with open(database_path, "w") as f:
-        f.write("\n".join(emoji))
-    _note("Downloaded {} emoji to database".format(len(emoji)))
+    pass
 
 
 @cli.group(
