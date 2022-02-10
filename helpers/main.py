@@ -1,5 +1,3 @@
-import os
-import tempfile
 import logging
 
 from helpers.fetcher import SimpleFetcher
@@ -15,20 +13,12 @@ def grab(dest: str):
     parser = RegexParser()
     html = fetcher.request()
 
-    # TODO: figure out the issue with encoding to skip saving/reading from a file
-    with tempfile.NamedTemporaryFile(mode="w", delete=False) as fp:
-        fp.write(html)
-
-    with open(fp.name) as f:
-        html_saved = f.read()
-
-    emoji = parser.parse(html_saved)
-
+    emoji = set(parser.parse(html))  # skip duplicates if any
     with open(dest, "w") as f:
         f.write("\n".join(emoji))
-    logger.info("Downloaded {} emoji to database".format(len(emoji)))
+
+    logger.info(f"Downloaded {len(emoji)} emoji to database")
     logger.debug("Deleting temporary file")
-    os.remove(fp.name)
 
 
 def render_preview(db_path: str):
@@ -47,7 +37,7 @@ def main():
     logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.DEBUG)
     db_path = "emoji-db-tmp"
     # db_path = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
-    # grab(db_path)
+    grab(db_path)
     render_preview(db_path)
 
 
