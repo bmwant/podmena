@@ -13,6 +13,7 @@ from podmena.utils import (
     _note,
     _info,
     force_symlink,
+    safe_delete,
     get_git_root_dir,
     set_git_global_hooks_path,
     get_git_config_hooks_value,
@@ -155,11 +156,11 @@ def local_uninstall():
     hook_filepath = os.path.join(git_local_root, "hooks", config.HOOK_FILENAME)
     db_link = os.path.join(git_local_root, "hooks", config.DATABASE_FILE)
     if os.path.exists(hook_filepath):
-        os.remove(hook_filepath)
-        os.remove(db_link)
+        safe_delete(hook_filepath)
+        safe_delete(db_link)
         _info("💥 🚫 💥 Uninstalled for current repository.", bold=True)
     else:
-        _warn("podmena is not installed for current repository!")
+        _warn("podmena is not installed for current repository.")
         sys.exit(1)
 
 
@@ -172,10 +173,10 @@ def global_uninstall():
     if rc == 0:
         _info("💥 🚫 💥 Deactivated podmena globally.", bold=True)
     elif rc == 5:
-        _warn("podmena is not installed globally!")
+        _warn("podmena is not installed globally.")
         sys.exit(1)
     else:
-        _warn("Failed to deactivate")
+        _warn("Failed to deactivate.")
         sys.exit(rc)
 
 

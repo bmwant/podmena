@@ -76,8 +76,15 @@ def get_git_root_dir():
         pass
 
 
-def force_symlink(src, dst):
+def force_symlink(src: str, dst: str):
     if os.path.exists(dst) and os.path.islink(dst):
         os.remove(dst)
 
     os.symlink(src, dst)
+
+
+def safe_delete(path: str):
+    try:
+        os.remove(path)
+    except FileNotFoundError:
+        pass
