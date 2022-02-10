@@ -3,12 +3,32 @@ import os
 from click.testing import CliRunner
 
 from podmena import config
-from podmena.cli import install
+from podmena import cli
+
+
+def test_executable_invocation():
+    runner = CliRunner()
+    result = runner.invoke(cli.cli)
+
+    assert result.exit_code == 0
+
+    assert "Usage" in result.output
+    assert "Commands" in result.output
+    assert "Options" in result.output
+    assert "podmena" in result.output
+
+
+def test_help_invocation():
+    runner = CliRunner()
+    result = runner.invoke(cli.cli, ["--help"])
+
+    assert result.exit_code == 0
+    assert "Show this message and exit" in result.output
 
 
 def test_local_install():
     runner = CliRunner()
-    result = runner.invoke(install, ["local"])
+    result = runner.invoke(cli.install, ["local"])
 
     assert result.exit_code == 0
     assert result.output == "✨ 🍒 ✨ Installed for current repository!\n"

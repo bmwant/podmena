@@ -27,38 +27,10 @@ def cli():
 
 
 @cli.command(
-    name="status",
-    help="Shows whether podmena is installed for current repository or globally",
+    name="update",
+    hidden=True,
+    help="[DEPRECATED] Command doesn't do anything. Noop",
 )
-def status():
-    active = False
-    git_root_dir = get_git_root_dir()
-    if git_root_dir is not None:
-        local_hooks_path = os.path.join(git_root_dir, ".git", "hooks")
-        database_path = os.path.join(local_hooks_path, config.DATABASE_FILE)
-        hook_path = os.path.join(local_hooks_path, config.HOOK_FILENAME)
-        if os.path.exists(database_path) and os.path.exists(hook_path):
-            _note("podmena is activated for current repository.")
-            active = True
-
-    global_hooks_path = os.path.expanduser("~/.podmena/hooks")
-    global_database_path = os.path.join(global_hooks_path, config.DATABASE_FILE)
-    global_hook_path = os.path.join(global_hooks_path, config.HOOK_FILENAME)
-    git_global_hooks_config = get_git_config_hooks_value()
-
-    if (
-        os.path.exists(global_database_path)
-        and os.path.exists(global_hook_path)
-        and git_global_hooks_config == global_hooks_path
-    ):
-        _note("podmena is activated globally.")
-        active = True
-
-    if not active:
-        _warn("🍄 podmena is not activated neither for current repository nor globally.")
-
-
-@cli.command(name="update", help="[DEPRECATED] Command doesn't do anything. Noop")
 def update():
     warnings.warn(
         "Command will be removed in the next minor release.", DeprecationWarning
@@ -70,8 +42,9 @@ def update():
 
 
 @cli.group(
-    name=("add", "activate", "enable", "install", "on"),
+    name=("on", "add", "activate", "enable", "install"),
     help="Activate podmena",
+    cls=AliasedGroup,
     invoke_without_command=True,
 )
 @click.pass_context
@@ -131,8 +104,9 @@ def global_install():
 
 
 @cli.group(
-    name=("rm", "remove", "delete", "deactivate", "disable", "off", "uninstall"),
+    name=("off", "rm", "remove", "delete", "deactivate", "disable", "uninstall"),
     help="Deactivate podmena",
+    cls=AliasedGroup,
     invoke_without_command=True,
 )
 @click.pass_context
@@ -173,6 +147,38 @@ def global_uninstall():
     else:
         _warn("🍄 Failed to deactivate.")
         sys.exit(rc)
+
+
+@cli.command(
+    name="status",
+    help="Shows whether podmena is installed for current repository or globally",
+)
+def status():
+    active = False
+    git_root_dir = get_git_root_dir()
+    if git_root_dir is not None:
+        local_hooks_path = os.path.join(git_root_dir, ".git", "hooks")
+        database_path = os.path.join(local_hooks_path, config.DATABASE_FILE)
+        hook_path = os.path.join(local_hooks_path, config.HOOK_FILENAME)
+        if os.path.exists(database_path) and os.path.exists(hook_path):
+            _note("podmena is activated for current repository.")
+            active = True
+
+    global_hooks_path = os.path.expanduser("~/.podmena/hooks")
+    global_database_path = os.path.join(global_hooks_path, config.DATABASE_FILE)
+    global_hook_path = os.path.join(global_hooks_path, config.HOOK_FILENAME)
+    git_global_hooks_config = get_git_config_hooks_value()
+
+    if (
+        os.path.exists(global_database_path)
+        and os.path.exists(global_hook_path)
+        and git_global_hooks_config == global_hooks_path
+    ):
+        _note("podmena is activated globally.")
+        active = True
+
+    if not active:
+        _warn("🍄 podmena is not activated neither for current repository nor globally.")
 
 
 if __name__ == "__main__":
