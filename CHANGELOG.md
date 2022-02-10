@@ -1,4 +1,14 @@
-## 0.6.0
+### 0.7.0 (future release)
+
+* Delete deprecated `update` command
+* Store config in a centralized place
+
+### 0.6.1 (future release)
+
+* Move helper functions to separate side-package
+* Update emoji database
+
+## 0.6.0 (ongoing work)
 
 * Add icons to info messages
 * Allow to run `activate` / `deactivate` commands without arguments (`local` installation is a default)
