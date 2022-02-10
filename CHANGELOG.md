@@ -1,5 +1,6 @@
 ### 0.7.0 (future release)
 
+* Drop support for Python `3.5`
 * Delete deprecated `update` command
 * Store config in a centralized place
 

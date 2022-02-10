@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import warnings
 
 import click
 
@@ -57,11 +58,15 @@ def status():
         _warn("🍄 podmena is not activated neither for current repository nor globally.")
 
 
-@cli.command(
-    name="update", help="Update database of emoji in case of any changes from remote"
-)
-def grab():
-    pass
+@cli.command(name="update", help="[DEPRECATED] Command doesn't do anything. Noop")
+def update():
+    warnings.warn(
+        "Command will be removed in the next minor release.", DeprecationWarning
+    )
+    update_command = click.style("pip install --upgrade podmena", bold=True)
+    _info("💥 Command is deprecated.")
+    print("\n\t{}\n".format(update_command))
+    _info("Run the above command instead for the update.")
 
 
 @cli.group(
