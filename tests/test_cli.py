@@ -1,4 +1,5 @@
 import os
+from unittest.mock import patch
 
 from podmena import cli
 
@@ -71,6 +72,10 @@ def test_global_install():
     pass
 
 
+def test_global_uninstall():
+    pass
+
+
 def test_alias_invocation(runner):
     result_on = runner.invoke(cli.cli, ["on"])
 
@@ -90,12 +95,41 @@ def test_default_invocation(runner):
     assert result.output == "✨ 🍒 ✨ Installed for current repository!\n"
 
 
-def test_status_active(runner):
+@patch("podmena.cli.get_git_config_hooks_value")
+def test_status_active_locally(
+    get_git_config_hooks_value_mock,
+    runner,
+):
+    runner.invoke(cli.cli, ["enable"])
+    with patch(
+        "podmena.cli.get_git_root_dir", return_value=runner.root_dir
+    ) as get_git_root_dir_mock:
+        result = runner.invoke(cli.cli, ["status"])
+        get_git_root_dir_mock.assert_called_once_with()
+
+    get_git_config_hooks_value_mock.assert_called_once_with()
+    assert result.exit_code == 0
+    assert result.output == "podmena is activated for current repository.\n"
+
+
+def test_status_active_globally(runner):
+    pass
+
+
+@patch("podmena.cli.get_git_root_dir")
+@patch("podmena.cli.get_git_config_hooks_value")
+def test_status_inactive(
+    get_git_config_hooks_value_mock,
+    get_git_root_dir_mock,
+    runner,
+):
     result = runner.invoke(cli.cli, ["status"])
 
-    print(result.exit_code)
+    get_git_root_dir_mock.assert_called_once_with()
+    get_git_config_hooks_value_mock.assert_called_once_with()
 
-
-def test_status_inactive(runner):
-    result = runner.invoke(cli.cli, ["status"])
-    print(result.exit_code)
+    assert result.exit_code == 0
+    assert (
+        result.output
+        == "🍄 podmena is not activated neither for current repository nor globally.\n"
+    )

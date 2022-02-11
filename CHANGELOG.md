@@ -7,7 +7,7 @@
 ### 0.6.1 (future release)
 
 * Move helper functions to separate side-package
-* Update emoji database
+* Update emoji database; add preview page for existing icons
 
 ## 0.6.0 (ongoing work)
 

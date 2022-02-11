@@ -23,6 +23,7 @@ def fake_git_repo():
 @pytest.fixture
 def runner():
     cli_runner = CliRunner()
-    with cli_runner.isolated_filesystem():
+    with cli_runner.isolated_filesystem() as path:
         fake_git_repo()
+        cli_runner.root_dir = path
         yield cli_runner
