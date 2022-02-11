@@ -1,5 +1,5 @@
 import os
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 from podmena import cli, config
 
@@ -123,6 +123,7 @@ def test_status_active_globally(
     confirm_mock,
     runner,
 ):
+    confirm_mock.return_value = False  # skip actual installation here
     check_exists_mock.return_value = True
     get_git_config_hooks_value_mock.return_value = config.GLOBAL_HOOKS_DIR
 
@@ -135,10 +136,7 @@ def test_status_active_globally(
     assert check_exists_mock.call_count == 2
 
     assert result.exit_code == 0
-    assert (
-        result.output
-        == "✨ podmena is activated globally.\n"
-    )
+    assert result.output == "✨ podmena is activated globally.\n"
 
 
 @patch("podmena.cli.get_git_root_dir")
