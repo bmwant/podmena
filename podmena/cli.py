@@ -80,7 +80,6 @@ def local_install():
     help="Install podmena globally for every git repository",
 )
 def global_install():
-    global_hooks_path = os.path.expanduser("~/.podmena/hooks")
     confirm_info = (
         "This will set a single global hooks directory for all your repositories.\n"
         "This action may deactivate your previous hooks installed per "
@@ -89,17 +88,18 @@ def global_install():
     )
     _info(confirm_info)
     if click.confirm("Do you want to continue?", abort=True):
-        if not os.path.exists(global_hooks_path):
-            os.makedirs(global_hooks_path)
+        # TODO: move to init function
+        if not os.path.exists(config.GLOBAL_HOOKS_DIR):
+            os.makedirs(config.GLOBAL_HOOKS_DIR)
 
         src_file = os.path.join(config.RESOURCES_DIR, config.HOOK_FILENAME)
-        dst_file = os.path.join(global_hooks_path, config.HOOK_FILENAME)
+        dst_file = os.path.join(config.GLOBAL_HOOKS_DIR, config.HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
         db_file = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
-        db_link = os.path.join(global_hooks_path, config.DATABASE_FILE)
+        db_link = os.path.join(config.GLOBAL_HOOKS_DIR, config.DATABASE_FILE)
         force_symlink(db_file, db_link)
-        set_git_global_hooks_path(global_hooks_path)
+        set_git_global_hooks_path(config.GLOBAL_HOOKS_DIR)
         _note("✨ 🍒 ✨ Installed globally for all repositories!", bold=True)
 
 
@@ -164,15 +164,14 @@ def status():
             _note("podmena is activated for current repository.")
             active = True
 
-    global_hooks_path = os.path.expanduser("~/.podmena/hooks")
-    global_database_path = os.path.join(global_hooks_path, config.DATABASE_FILE)
-    global_hook_path = os.path.join(global_hooks_path, config.HOOK_FILENAME)
+    global_database_path = os.path.join(config.GLOBAL_HOOKS_DIR, config.DATABASE_FILE)
+    global_hook_path = os.path.join(config.GLOBAL_HOOKS_DIR, config.HOOK_FILENAME)
     git_global_hooks_config = get_git_config_hooks_value()
 
     if (
         os.path.exists(global_database_path)
         and os.path.exists(global_hook_path)
-        and git_global_hooks_config == global_hooks_path
+        and git_global_hooks_config == config.GLOBAL_HOOKS_DIR
     ):
         _note("podmena is activated globally.")
         active = True

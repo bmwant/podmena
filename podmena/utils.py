@@ -16,7 +16,7 @@ def _info(message, **kwargs):
     click.secho(message, fg="yellow", **kwargs)
 
 
-def set_git_global_hooks_path(hooks_path):
+def set_git_global_hooks_path(hooks_path: str):
     subprocess.call(
         [
             "git",

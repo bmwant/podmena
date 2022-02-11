@@ -112,7 +112,13 @@ def test_status_active_locally(
     assert result.output == "podmena is activated for current repository.\n"
 
 
-def test_status_active_globally(runner):
+@patch("podmena.cli.get_git_root_dir")
+@patch("podmena.cli.get_git_config_hooks_value")
+def test_status_active_globally(
+    get_git_config_hooks_value_mock,
+    get_git_root_dir_mock,
+    runner,
+):
     pass
 
 
