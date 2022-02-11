@@ -125,6 +125,7 @@ def test_status_active_globally(
 ):
     confirm_mock.return_value = False  # skip actual installation here
     check_exists_mock.return_value = True
+    get_git_root_dir_mock.return_value = None
     get_git_config_hooks_value_mock.return_value = config.GLOBAL_HOOKS_DIR
 
     runner.invoke(cli.cli, ["install", "global"])
@@ -146,8 +147,9 @@ def test_status_inactive(
     get_git_root_dir_mock,
     runner,
 ):
-    result = runner.invoke(cli.cli, ["status"])
+    get_git_root_dir_mock.return_value = None
 
+    result = runner.invoke(cli.cli, ["status"])
     get_git_root_dir_mock.assert_called_once_with()
     get_git_config_hooks_value_mock.assert_called_once_with()
 

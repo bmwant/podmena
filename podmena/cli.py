@@ -158,7 +158,6 @@ def status():
     active = False
     git_root_dir = get_git_root_dir()
     if git_root_dir is not None:
-
         local_hooks_path = os.path.join(git_root_dir, ".git", "hooks")
         database_path = os.path.join(local_hooks_path, config.DATABASE_FILE)
         hook_path = os.path.join(local_hooks_path, config.HOOK_FILENAME)
