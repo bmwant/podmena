@@ -4,12 +4,12 @@
 * Delete deprecated `update` command
 * Store config in a centralized place
 
-### 0.6.1 (future release)
+### 0.6.1 (ongoing work)
 
 * Move helper functions to separate side-package
 * Update emoji database; add preview page for existing icons
 
-## 0.6.0 (ongoing work)
+## 0.6.0
 
 * Fix bug with invocation without a subcommand
 * Add icons to info messages
