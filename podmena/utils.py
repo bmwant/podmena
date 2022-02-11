@@ -88,3 +88,8 @@ def safe_delete(path: str):
         os.remove(path)
     except FileNotFoundError:
         pass
+
+
+def check_exists(path: str) -> bool:
+    """Simple wrapper for easier unit-testing"""
+    return os.path.exists(path)

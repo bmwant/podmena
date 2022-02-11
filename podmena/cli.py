@@ -11,6 +11,7 @@ from podmena.utils import (
     _warn,
     _note,
     _info,
+    check_exists,
     force_symlink,
     safe_delete,
     get_git_root_dir,
@@ -157,11 +158,12 @@ def status():
     active = False
     git_root_dir = get_git_root_dir()
     if git_root_dir is not None:
+
         local_hooks_path = os.path.join(git_root_dir, ".git", "hooks")
         database_path = os.path.join(local_hooks_path, config.DATABASE_FILE)
         hook_path = os.path.join(local_hooks_path, config.HOOK_FILENAME)
         if os.path.exists(database_path) and os.path.exists(hook_path):
-            _note("podmena is activated for current repository.")
+            _note("✨ podmena is activated for current repository.")
             active = True
 
     global_database_path = os.path.join(config.GLOBAL_HOOKS_DIR, config.DATABASE_FILE)
@@ -169,11 +171,11 @@ def status():
     git_global_hooks_config = get_git_config_hooks_value()
 
     if (
-        os.path.exists(global_database_path)
-        and os.path.exists(global_hook_path)
+        check_exists(global_database_path)
+        and check_exists(global_hook_path)
         and git_global_hooks_config == config.GLOBAL_HOOKS_DIR
     ):
-        _note("podmena is activated globally.")
+        _note("✨ podmena is activated globally.")
         active = True
 
     if not active:
