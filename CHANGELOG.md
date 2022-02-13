@@ -8,6 +8,7 @@
 
 * Move helper functions to separate side-package
 * Update emoji database; add preview page for existing icons
+* Sort database alphabetically and remove items not supported by Github
 
 ## 0.6.0
 
