@@ -62,7 +62,7 @@ def install(ctx):
 def local_install():
     git_local_root = os.path.join(os.getcwd(), ".git")
     local_hooks_path = os.path.join(git_local_root, "hooks")
-    if os.path.exists(git_local_root) and os.path.isdir(git_local_root):
+    if os.path.exists(git_local_root) and os.path.isdir(local_hooks_path):
         src_file = os.path.join(config.RESOURCES_DIR, config.HOOK_FILENAME)
         dst_file = os.path.join(local_hooks_path, config.HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
@@ -90,7 +90,7 @@ def global_install():
     _info(confirm_info)
     if click.confirm("Do you want to continue?", abort=True):
         # TODO: move to init function
-        if not os.path.exists(config.GLOBAL_HOOKS_DIR):
+        if not check_exists(config.GLOBAL_HOOKS_DIR):
             os.makedirs(config.GLOBAL_HOOKS_DIR)
 
         src_file = os.path.join(config.RESOURCES_DIR, config.HOOK_FILENAME)
