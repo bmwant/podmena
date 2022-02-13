@@ -68,12 +68,22 @@ def test_local_uninstall_not_installed(runner):
     )
 
 
-def test_global_install():
+@patch("click.confirm")
+def test_global_install(runner):
     pass
 
 
-def test_global_uninstall():
-    pass
+@patch("podmena.cli.unset_git_global_hooks_path")
+def test_global_uninstall(
+    unset_git_global_hooks_path_mock,
+    runner,
+):
+    unset_git_global_hooks_path_mock.return_value = 0
+    result = runner.invoke(cli.cli, ["uninstall", "global"])
+
+    assert result.exit_code == 0
+    assert result.output == "💥 🚫 💥 Deactivated podmena globally.\n"
+    unset_git_global_hooks_path_mock.assert_called_once_with()
 
 
 def test_alias_invocation(runner):

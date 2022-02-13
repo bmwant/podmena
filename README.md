@@ -5,7 +5,7 @@
     <img alt="Checks" src="https://github.com/bmwant/podmena/actions/workflows/tests.yml/badge.svg">
   </a>
 
-  <a href="https://pypi.org/project/podmena/" target="_blank">
+  <a href="https://pypi.org/project/podmena/">
     <img alt="PyPI" src="https://img.shields.io/pypi/v/podmena">
   </a>
 
