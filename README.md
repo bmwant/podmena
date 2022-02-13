@@ -1,11 +1,11 @@
 <h2 align="center">podmena</h2>
 
 <p align="center">
-  <a href="https://github.com/psf/black">
+  <a href="https://github.com/bmwant/podmena/actions">
     <img alt="Checks" src="https://github.com/bmwant/podmena/actions/workflows/tests.yml/badge.svg">
   </a>
 
-  <a href="https://github.com/psf/black">
+  <a href="https://pypi.org/project/podmena/" target="_blank">
     <img alt="PyPI" src="https://img.shields.io/pypi/v/podmena">
   </a>
 
@@ -18,7 +18,7 @@ Enhance your commit messages with emoji 🍒
 </p>
 
 podmena will automatically add random emoji to every commit message for any
-git repository installed.
+git repository installed for.
 
 ![emoji](https://github.com/bmwant/podmena/blob/main/podmena.png)
 
