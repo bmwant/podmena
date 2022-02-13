@@ -1,11 +1,11 @@
-<center>
-## podmena
+<h2 align="center"> podmena</h2>
 
+<p align="center">
 ![Checks](https://github.com/bmwant/podmena/actions/workflows/tests.yml/badge.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Enhance your commit messages with emoji 🍒
-</center>
+</p>
 
 podmena will automatically add random emoji to every commit message for any
 git repository installed.
