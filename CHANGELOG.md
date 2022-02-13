@@ -1,10 +1,10 @@
-### 0.7.0 (future release)
+### 0.7.0 ⚙️ ongoing work
 
 * Drop support for Python `3.5`
 * Delete deprecated `update` command
 * Store config in a centralized place
 
-### 0.6.1 (ongoing work)
+## 0.6.1 📦 current package
 
 * Move helper functions to separate side-package
 * Update emoji database; add preview page for existing icons
