@@ -23,7 +23,8 @@ def grab(dest: str):
     html = fetcher.request()
 
     unique_emoji = set(parser.parse(html))  # skip duplicates if any
-    sorted_emoji = sorted(unique_emoji)  # sort list alphabetically
+    filtered_emoji = filter(lambda x: x not in BLACKLIST, unique_emoji)
+    sorted_emoji = sorted(filtered_emoji)  # sort list alphabetically
     with open(dest, "w") as f:
         f.write("\n".join(sorted_emoji))
 
