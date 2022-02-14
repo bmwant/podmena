@@ -6,6 +6,15 @@ from helpers.parser import RegexParser
 
 logger = logging.getLogger(__name__)
 
+# List of emojis not rendered by GitHub
+BLACKLIST = [
+    "person_frowning",
+    "person_with_blond_hair",
+    "person_with_pouting_face",
+    "simple_smile",
+    "squirrel",
+]
+
 
 def grab(dest: str):
     url = "https://www.webfx.com/tools/emoji-cheat-sheet/"
@@ -13,12 +22,12 @@ def grab(dest: str):
     parser = RegexParser()
     html = fetcher.request()
 
-    emoji = set(parser.parse(html))  # skip duplicates if any
+    unique_emoji = set(parser.parse(html))  # skip duplicates if any
+    sorted_emoji = sorted(unique_emoji)  # sort list alphabetically
     with open(dest, "w") as f:
-        f.write("\n".join(emoji))
+        f.write("\n".join(sorted_emoji))
 
-    logger.info(f"Downloaded {len(emoji)} emoji to database")
-    logger.debug("Deleting temporary file")
+    logger.info(f"Downloaded {len(sorted_emoji)} emoji to database")
 
 
 def render_preview(db_path: str):

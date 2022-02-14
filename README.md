@@ -20,7 +20,7 @@ Enhance your commit messages with emoji 🍒
 podmena will automatically add random emoji to every commit message for any
 git repository installed for.
 
-![emoji](https://github.com/bmwant/podmena/blob/main/podmena.png)
+![emoji](https://github.com/bmwant/podmena/raw/main/podmena.png)
 
 **868** items in database so far!
 

@@ -87,6 +87,7 @@ def test_global_install(
     result = runner.invoke(cli.cli, ["install", "global"])
 
     assert result.exit_code == 0
+    # TODO: check alert message for the info
     info_mock.assert_called_once()
     check_exists_mock.assert_called_once()
     force_symlink_mock.assert_called_once()
