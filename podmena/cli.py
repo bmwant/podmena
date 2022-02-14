@@ -1,7 +1,6 @@
 import os
 import sys
 import shutil
-import warnings
 
 import click
 
@@ -22,24 +21,9 @@ from podmena.utils import (
 
 
 @click.group(cls=AliasedGroup)
-@click.version_option()
+@click.version_option(message="🍒 podmena, version %(version)s")
 def cli():
     pass
-
-
-@cli.command(
-    name="update",
-    hidden=True,
-    help="[DEPRECATED] Command doesn't do anything. Noop",
-)
-def update():
-    warnings.warn(
-        "Command will be removed in the next minor release.", DeprecationWarning
-    )
-    update_command = click.style("pip install --upgrade podmena", bold=True)
-    _info("💥 Command is deprecated.")
-    print("\n\t{}\n".format(update_command))
-    _info("Run the above command instead for the update.")
 
 
 @cli.group(

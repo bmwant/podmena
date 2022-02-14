@@ -22,11 +22,9 @@ def test_executable_invocation(runner):
 
 def test_version_invocation(runner):
     result = runner.invoke(cli.cli, ["--version"])
-    executable_name = runner.get_default_prog_name(cli.cli)
 
     assert result.exit_code == 0
-    assert executable_name in result.output
-    assert "version" in result.output
+    assert result.output.startswith("🍒 podmena, version")
 
 
 def test_help_invocation(runner):
