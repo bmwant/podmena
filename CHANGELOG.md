@@ -3,6 +3,7 @@
 * Drop support for Python `3.5`
 * Delete deprecated `update` command
 * Store config in a centralized place
+* Add logging
 
 ## 0.6.1 📦 current package
 

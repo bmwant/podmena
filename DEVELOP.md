@@ -18,8 +18,14 @@ Install git hooks for the automatic linting and code formatting with [pre-commit
 
 ```bash
 $ pre-commit install
-$ pre-commit run --all-files # to initialize for the first time
-$ pre-commit run flake8 # run a hook individually
+$ pre-commit run --all-files  # to initialize for the first time
+$ pre-commit run flake8  # run a hook individually
+```
+
+Enable extra logging
+
+```bash
+$ export PODMENA_DEBUG=1
 ```
 
 ### Releasing
@@ -27,7 +33,7 @@ $ pre-commit run flake8 # run a hook individually
 Bump a version with features you want to include and build a package
 
 ```bash
-$ poetry version patch # patch version update
+$ poetry version patch  # patch version update
 $ poetry version minor
 $ poetry version major  # choose one based on semver rules
 $ poetry build

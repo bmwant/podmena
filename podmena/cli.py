@@ -7,9 +7,10 @@ import click
 from podmena import config
 from podmena.group import AliasedGroup
 from podmena.utils import (
-    _warn,
-    _note,
-    _info,
+    warn,
+    note,
+    info,
+    initialize,
     check_exists,
     force_symlink,
     safe_delete,
@@ -23,7 +24,7 @@ from podmena.utils import (
 @click.group(cls=AliasedGroup)
 @click.version_option(message="🍒 podmena, version %(version)s")
 def cli():
-    pass
+    initialize()
 
 
 @cli.group(
@@ -54,9 +55,9 @@ def local_install():
         db_file = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
         db_link = os.path.join(local_hooks_path, config.DATABASE_FILE)
         force_symlink(db_file, db_link)
-        _note("✨ 🍒 ✨ Installed for current repository!", bold=True)
+        note("✨ 🍒 ✨ Installed for current repository!", bold=True)
     else:
-        _warn("🍄 Not a git repository.")
+        warn("🍄 Not a git repository.")
         sys.exit(1)
 
 
@@ -71,7 +72,7 @@ def global_install():
         "repository.\nFor more info see "
         "https://git-scm.com/docs/git-config#git-config-corehooksPath\n"
     )
-    _info(confirm_info)
+    info(confirm_info)
     if click.confirm("Do you want to continue?", abort=True):
         # TODO: move to init function
         if not check_exists(config.GLOBAL_HOOKS_DIR):
@@ -85,7 +86,7 @@ def global_install():
         db_link = os.path.join(config.GLOBAL_HOOKS_DIR, config.DATABASE_FILE)
         force_symlink(db_file, db_link)
         set_git_global_hooks_path(config.GLOBAL_HOOKS_DIR)
-        _note("✨ 🍒 ✨ Installed globally for all repositories!", bold=True)
+        note("✨ 🍒 ✨ Installed globally for all repositories!", bold=True)
 
 
 @cli.group(
@@ -112,9 +113,9 @@ def local_uninstall():
     if os.path.exists(hook_filepath):
         safe_delete(hook_filepath)
         safe_delete(db_link)
-        _info("💥 🚫 💥 Uninstalled for current repository.", bold=True)
+        info("💥 🚫 💥 Uninstalled for current repository.", bold=True)
     else:
-        _warn("🍄 podmena is not installed for current repository.")
+        warn("🍄 podmena is not installed for current repository.")
         sys.exit(1)
 
 
@@ -125,12 +126,12 @@ def local_uninstall():
 def global_uninstall():
     rc = unset_git_global_hooks_path()
     if rc == 0:
-        _info("💥 🚫 💥 Deactivated podmena globally.", bold=True)
+        info("💥 🚫 💥 Deactivated podmena globally.", bold=True)
     elif rc == 5:
-        _warn("🍄 podmena is not installed globally.")
+        warn("🍄 podmena is not installed globally.")
         sys.exit(1)
     else:
-        _warn("🍄 Failed to deactivate.")
+        warn("🍄 Failed to deactivate.")
         sys.exit(rc)
 
 
@@ -146,7 +147,7 @@ def status():
         database_path = os.path.join(local_hooks_path, config.DATABASE_FILE)
         hook_path = os.path.join(local_hooks_path, config.HOOK_FILENAME)
         if os.path.exists(database_path) and os.path.exists(hook_path):
-            _note("✨ podmena is activated for current repository.")
+            note("✨ podmena is activated for current repository.")
             active = True
 
     global_database_path = os.path.join(config.GLOBAL_HOOKS_DIR, config.DATABASE_FILE)
@@ -158,11 +159,11 @@ def status():
         and check_exists(global_hook_path)
         and git_global_hooks_config == config.GLOBAL_HOOKS_DIR
     ):
-        _note("✨ podmena is activated globally.")
+        note("✨ podmena is activated globally.")
         active = True
 
     if not active:
-        _warn("🍄 podmena is not activated neither for current repository nor globally.")
+        warn("🍄 podmena is not activated neither for current repository nor globally.")
 
 
 if __name__ == "__main__":

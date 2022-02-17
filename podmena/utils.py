@@ -1,18 +1,31 @@
 import os
+import logging
 import subprocess
 
 import click
 
+from podmena import config
 
-def _warn(message, **kwargs):
+
+logger = logging.getLogger()
+
+
+def initialize():
+    logger.disable()
+    if config.DEBUG:
+        logger.setLevel(logging.DEBUG)
+    logger.debug("Initializing app...")
+
+
+def warn(message, **kwargs):
     click.secho(message, fg="red", **kwargs)
 
 
-def _note(message, **kwargs):
+def note(message, **kwargs):
     click.secho(message, fg="green", **kwargs)
 
 
-def _info(message, **kwargs):
+def info(message, **kwargs):
     click.secho(message, fg="yellow", **kwargs)
 
 
