@@ -68,18 +68,15 @@ def test_local_uninstall_not_installed(runner):
 
 @patch("click.confirm")
 @patch("podmena.cli.info")
-@patch("podmena.cli.check_exists")
 @patch("podmena.cli.force_symlink")
 @patch("podmena.cli.set_git_global_hooks_path")
 def test_global_install(
     set_git_global_hooks_path_mock,
     force_symlink_mock,
-    check_exists_mock,
     info_mock,
     confirm_mock,
     runner,
 ):
-    check_exists_mock.return_value = True
     confirm_mock.return_value = True
 
     result = runner.invoke(cli.cli, ["install", "global"])
@@ -87,7 +84,6 @@ def test_global_install(
     assert result.exit_code == 0
     # TODO: check alert message for the info
     info_mock.assert_called_once()
-    check_exists_mock.assert_called_once()
     force_symlink_mock.assert_called_once()
     set_git_global_hooks_path_mock.assert_called_once_with(config.GLOBAL_HOOKS_DIR)
     assert result.output == "✨ 🍒 ✨ Installed globally for all repositories!\n"

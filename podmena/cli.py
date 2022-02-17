@@ -73,10 +73,6 @@ def global_install():
     )
     info(confirm_info)
     if click.confirm("Do you want to continue?", abort=True):
-        # TODO: move to init function
-        if not check_exists(config.GLOBAL_HOOKS_DIR):
-            os.makedirs(config.GLOBAL_HOOKS_DIR)
-
         src_file = os.path.join(config.RESOURCES_DIR, config.HOOK_FILENAME)
         dst_file = os.path.join(config.GLOBAL_HOOKS_DIR, config.HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)

@@ -8,13 +8,15 @@ from podmena import config
 
 
 def initialize():
-    logging.disable()
+    logging.disable(level=logging.CRITICAL)
 
     if config.DEBUG:
         logging.disable(logging.NOTSET)
         logging.basicConfig(level=logging.DEBUG)
 
-    logging.debug("Initializing app...")
+    if not check_exists(config.GLOBAL_HOOKS_DIR):
+        logging.debug("Creating config directory.")
+        os.makedirs(config.GLOBAL_HOOKS_DIR)
 
 
 def warn(message, **kwargs):
