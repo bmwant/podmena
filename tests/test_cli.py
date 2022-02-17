@@ -67,7 +67,7 @@ def test_local_uninstall_not_installed(runner):
 
 
 @patch("click.confirm")
-@patch("podmena.cli._info")
+@patch("podmena.cli.info")
 @patch("podmena.cli.check_exists")
 @patch("podmena.cli.force_symlink")
 @patch("podmena.cli.set_git_global_hooks_path")
