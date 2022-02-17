@@ -7,14 +7,14 @@ import click
 from podmena import config
 
 
-logger = logging.getLogger()
-
-
 def initialize():
-    logger.disable()
+    logging.disable()
+
     if config.DEBUG:
-        logger.setLevel(logging.DEBUG)
-    logger.debug("Initializing app...")
+        logging.disable(logging.NOTSET)
+        logging.basicConfig(level=logging.DEBUG)
+
+    logging.debug("Initializing app...")
 
 
 def warn(message, **kwargs):

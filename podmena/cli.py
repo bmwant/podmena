@@ -10,7 +10,6 @@ from podmena.utils import (
     warn,
     note,
     info,
-    initialize,
     check_exists,
     force_symlink,
     safe_delete,
@@ -24,7 +23,7 @@ from podmena.utils import (
 @click.group(cls=AliasedGroup)
 @click.version_option(message="🍒 podmena, version %(version)s")
 def cli():
-    initialize()
+    pass
 
 
 @cli.group(
