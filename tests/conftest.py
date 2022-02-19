@@ -1,5 +1,7 @@
 import os
+import sys
 from unittest.mock import patch
+from contextlib import contextmanager
 
 import pytest
 from click.testing import CliRunner
@@ -20,3 +22,12 @@ def runner():
         # Override global config directory
         with patch("podmena.config.GLOBAL_HOOKS_DIR", path):
             yield cli_runner
+
+
+@contextmanager
+def eject_module(module_name):
+    module = sys.modules.pop(module_name)
+    try:
+        yield module
+    finally:
+        sys.modules[module_name] = module
