@@ -4,7 +4,7 @@ import shutil
 
 import click
 
-from podmena import config
+from podmena import config, options
 from podmena.group import AliasedGroup
 from podmena.utils import (
     warn,
@@ -32,8 +32,10 @@ def cli():
     cls=AliasedGroup,
     invoke_without_command=True,
 )
+@options.template
+@options.position
 @click.pass_context
-def install(ctx):
+def install(ctx, position, template):
     if ctx.invoked_subcommand is None:
         # Install locally by default
         ctx.forward(local_install)
@@ -43,7 +45,9 @@ def install(ctx):
     name="local",
     help="Install podmena for current git repository",
 )
-def local_install():
+@options.template
+@options.position
+def local_install(position, template):
     git_local_root = os.path.join(os.getcwd(), ".git")
     local_hooks_path = os.path.join(git_local_root, "hooks")
     if os.path.exists(git_local_root) and os.path.isdir(local_hooks_path):
@@ -64,7 +68,9 @@ def local_install():
     name="global",
     help="Install podmena globally for every git repository",
 )
-def global_install():
+@options.position
+@options.template
+def global_install(position, template):
     confirm_info = (
         "This will set a single global hooks directory for all your repositories.\n"
         "This action may deactivate your previous hooks installed per "

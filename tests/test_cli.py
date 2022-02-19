@@ -1,12 +1,6 @@
-import os
 from unittest.mock import patch
 
 from podmena import cli, config
-
-from .conftest import (
-    get_local_db_path,
-    get_local_hook_path,
-)
 
 
 def test_executable_invocation(runner):
@@ -32,93 +26,6 @@ def test_help_invocation(runner):
 
     assert result.exit_code == 0
     assert "Show this message and exit" in result.output
-
-
-def test_local_install(runner):
-    result = runner.invoke(cli.install, ["local"])
-
-    assert result.exit_code == 0
-    assert result.output == "✨ 🍒 ✨ Installed for current repository!\n"
-
-    hook_file_path = get_local_hook_path()
-    assert os.path.exists(hook_file_path)
-
-    db_file_path = get_local_db_path()
-    assert os.path.exists(db_file_path)
-
-
-def test_local_uninstall(runner):
-    result_install = runner.invoke(cli.install, ["local"])
-    assert result_install.exit_code == 0
-
-    result_uninstall = runner.invoke(cli.remove, ["local"])
-    assert result_uninstall.exit_code == 0
-    assert result_uninstall.output == "💥 🚫 💥 Uninstalled for current repository.\n"
-
-
-def test_local_uninstall_not_installed(runner):
-    result_uninstall = runner.invoke(cli.remove)  # use default invocation
-
-    assert result_uninstall.exit_code == 1
-    assert (
-        result_uninstall.output
-        == "🍄 podmena is not installed for current repository.\n"
-    )
-
-
-@patch("click.confirm")
-@patch("podmena.cli.info")
-@patch("podmena.cli.force_symlink")
-@patch("podmena.cli.set_git_global_hooks_path")
-def test_global_install(
-    set_git_global_hooks_path_mock,
-    force_symlink_mock,
-    info_mock,
-    confirm_mock,
-    runner,
-):
-    confirm_mock.return_value = True
-
-    result = runner.invoke(cli.cli, ["install", "global"])
-
-    assert result.exit_code == 0
-    # TODO: check alert message for the info
-    info_mock.assert_called_once()
-    force_symlink_mock.assert_called_once()
-    set_git_global_hooks_path_mock.assert_called_once_with(config.GLOBAL_HOOKS_DIR)
-    assert result.output == "✨ 🍒 ✨ Installed globally for all repositories!\n"
-
-
-@patch("podmena.cli.unset_git_global_hooks_path")
-def test_global_uninstall(
-    unset_git_global_hooks_path_mock,
-    runner,
-):
-    unset_git_global_hooks_path_mock.return_value = 0
-    result = runner.invoke(cli.cli, ["uninstall", "global"])
-
-    assert result.exit_code == 0
-    assert result.output == "💥 🚫 💥 Deactivated podmena globally.\n"
-    unset_git_global_hooks_path_mock.assert_called_once_with()
-
-
-def test_alias_invocation(runner):
-    result_on = runner.invoke(cli.cli, ["on"])
-
-    assert result_on.exit_code == 0
-    assert "Installed" in result_on.output
-
-    result_activate = runner.invoke(cli.cli, ["activate"])
-    assert result_activate.exit_code == 0
-    assert "Installed" in result_activate.output
-
-
-def test_default_invocation(runner):
-    result = runner.invoke(cli.cli, ["install"])
-
-    # Default should be a local installation
-    assert result.exit_code == 0
-    assert result.output == "✨ 🍒 ✨ Installed for current repository!\n"
 
 
 @patch("podmena.cli.get_git_config_hooks_value")
