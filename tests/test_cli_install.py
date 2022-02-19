@@ -2,8 +2,7 @@ import os
 from unittest.mock import patch
 
 from podmena import cli, config
-
-from .conftest import (
+from podmena.utils import (
     get_local_db_path,
     get_local_hook_path,
 )

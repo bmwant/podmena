@@ -1,5 +1,6 @@
 import os
 import logging
+import shutil
 import subprocess
 
 import click
@@ -17,6 +18,12 @@ def initialize():
     if not check_exists(config.GLOBAL_HOOKS_DIR):
         logging.debug("Creating config directory.")
         os.makedirs(config.GLOBAL_HOOKS_DIR)
+
+    logging.debug("Copying resources to the config directory.")
+    hook_file = os.path.join(config.RESOURCES_DIR, config.HOOK_FILENAME)
+    db_file = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
+    shutil.copy(hook_file, config.CONFIG_DIR)
+    shutil.copy(db_file, config.CONFIG_DIR)
 
 
 def warn(message, **kwargs):
@@ -89,6 +96,14 @@ def get_git_root_dir():
         )
     except subprocess.CalledProcessError:
         pass
+
+
+def get_local_hook_path() -> str:
+    return os.path.join(os.getcwd(), ".git", "hooks", config.HOOK_FILENAME)
+
+
+def get_local_db_path() -> str:
+    return os.path.join(os.getcwd(), ".git", "hooks", config.DATABASE_FILE)
 
 
 def force_symlink(src: str, dst: str):

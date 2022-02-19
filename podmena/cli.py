@@ -14,6 +14,8 @@ from podmena.utils import (
     force_symlink,
     safe_delete,
     get_git_root_dir,
+    get_local_db_path,
+    get_local_hook_path,
     set_git_global_hooks_path,
     get_git_config_hooks_value,
     unset_git_global_hooks_path,
@@ -51,12 +53,12 @@ def local_install(position, template):
     git_local_root = os.path.join(os.getcwd(), ".git")
     local_hooks_path = os.path.join(git_local_root, "hooks")
     if os.path.exists(git_local_root) and os.path.isdir(local_hooks_path):
-        src_file = os.path.join(config.RESOURCES_DIR, config.HOOK_FILENAME)
-        dst_file = os.path.join(local_hooks_path, config.HOOK_FILENAME)
+        src_file = os.path.join(config.CONFIG_DIR, config.HOOK_FILENAME)
+        dst_file = get_local_hook_path()
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
-        db_file = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
-        db_link = os.path.join(local_hooks_path, config.DATABASE_FILE)
+        db_file = os.path.join(config.CONFIG_DIR, config.DATABASE_FILE)
+        db_link = get_local_db_path()
         force_symlink(db_file, db_link)
         note("✨ 🍒 ✨ Installed for current repository!", bold=True)
     else:
