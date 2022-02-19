@@ -81,11 +81,11 @@ def global_install(position, template):
     )
     info(confirm_info)
     if click.confirm("Do you want to continue?", abort=True):
-        src_file = os.path.join(config.RESOURCES_DIR, config.HOOK_FILENAME)
+        src_file = os.path.join(config.CONFIG_DIR, config.HOOK_FILENAME)
         dst_file = os.path.join(config.GLOBAL_HOOKS_DIR, config.HOOK_FILENAME)
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
-        db_file = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
+        db_file = os.path.join(config.CONFIG_DIR, config.DATABASE_FILE)
         db_link = os.path.join(config.GLOBAL_HOOKS_DIR, config.DATABASE_FILE)
         force_symlink(db_file, db_link)
         set_git_global_hooks_path(config.GLOBAL_HOOKS_DIR)

@@ -106,6 +106,16 @@ def get_local_db_path() -> str:
     return os.path.join(os.getcwd(), ".git", "hooks", config.DATABASE_FILE)
 
 
+def get_hook_path() -> str:
+    """local/shared"""
+    pass
+
+
+def get_db_path() -> str:
+    """local/shared"""
+    pass
+
+
 def force_symlink(src: str, dst: str):
     if os.path.exists(dst) and os.path.islink(dst):
         os.remove(dst)
