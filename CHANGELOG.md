@@ -1,9 +1,14 @@
+### 0.8.0
+
+* Allow activation within any subdirectory of a repository
+* Allow specifying `prefix`/`suffix` position for the emoji in commit message text
+
 ### 0.7.0 ⚙️ ongoing work
 
 * Drop support for Python `3.5`
 * Delete deprecated `update` command
-* Store config in a centralized place
-* Add logging
+* Store config and resources in a centralized place
+* Add internal logging
 
 ## 0.6.1 📦 current package
 

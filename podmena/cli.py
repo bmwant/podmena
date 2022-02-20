@@ -174,8 +174,8 @@ def status():
             note("✨ podmena is activated for current repository.")
             active = True
 
-    global_database_path = os.path.join(config.GLOBAL_HOOKS_DIR, config.DATABASE_FILE)
-    global_hook_path = os.path.join(config.GLOBAL_HOOKS_DIR, config.HOOK_FILENAME)
+    global_database_path = get_db_path(Filetype.GLOBAL)
+    global_hook_path = get_hook_path(Filetype.GLOBAL)
     git_global_hooks_config = get_git_config_hooks_value()
 
     if (
