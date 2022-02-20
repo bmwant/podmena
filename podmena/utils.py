@@ -2,6 +2,7 @@ import os
 import logging
 import shutil
 import subprocess
+from enum import Enum
 
 import click
 
@@ -24,6 +25,12 @@ def initialize():
     db_file = os.path.join(config.RESOURCES_DIR, config.DATABASE_FILE)
     shutil.copy(hook_file, config.CONFIG_DIR)
     shutil.copy(db_file, config.CONFIG_DIR)
+
+
+class Filetype(Enum):
+    SHARED = "shared"
+    LOCAL = "local"
+    GLOBAL = "global"
 
 
 def warn(message, **kwargs):
@@ -98,22 +105,27 @@ def get_git_root_dir():
         pass
 
 
-def get_local_hook_path() -> str:
-    return os.path.join(os.getcwd(), ".git", "hooks", config.HOOK_FILENAME)
+# TODO: merge similar logic into one function
+def get_hook_path(filetype: Filetype) -> str:
+    if filetype == Filetype.LOCAL:
+        return os.path.join(os.getcwd(), ".git", "hooks", config.HOOK_FILENAME)
+    elif filetype == Filetype.GLOBAL:
+        return os.path.join(config.GLOBAL_HOOKS_DIR, config.HOOK_FILENAME)
+    elif filetype == Filetype.SHARED:
+        return os.path.join(config.CONFIG_DIR, config.HOOK_FILENAME)
+    else:
+        raise ValueError("Incorrect file location requested")
 
 
-def get_local_db_path() -> str:
-    return os.path.join(os.getcwd(), ".git", "hooks", config.DATABASE_FILE)
-
-
-def get_hook_path() -> str:
-    """local/shared"""
-    pass
-
-
-def get_db_path() -> str:
-    """local/shared"""
-    pass
+def get_db_path(filetype: Filetype) -> str:
+    if filetype == Filetype.LOCAL:
+        return os.path.join(os.getcwd(), ".git", "hooks", config.DATABASE_FILE)
+    elif filetype == Filetype.GLOBAL:
+        return os.path.join(config.GLOBAL_HOOKS_DIR, config.DATABASE_FILE)
+    elif filetype == Filetype.SHARED:
+        return os.path.join(config.CONFIG_DIR, config.DATABASE_FILE)
+    else:
+        raise ValueError("Incorrect file location requested")
 
 
 def force_symlink(src: str, dst: str):

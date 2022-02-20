@@ -1,11 +1,13 @@
 import os
 import sys
+import logging
 import shutil
 
 import click
 
 from podmena import config, options
 from podmena.group import AliasedGroup
+from podmena.utils import Filetype
 from podmena.utils import (
     warn,
     note,
@@ -13,9 +15,9 @@ from podmena.utils import (
     check_exists,
     force_symlink,
     safe_delete,
+    get_db_path,
+    get_hook_path,
     get_git_root_dir,
-    get_local_db_path,
-    get_local_hook_path,
     set_git_global_hooks_path,
     get_git_config_hooks_value,
     unset_git_global_hooks_path,
@@ -50,16 +52,26 @@ def install(ctx, position, template):
 @options.template
 @options.position
 def local_install(position, template):
+    # TODO: check is repo via --is-inside-work-tree invocation
     git_local_root = os.path.join(os.getcwd(), ".git")
     local_hooks_path = os.path.join(git_local_root, "hooks")
-    if os.path.exists(git_local_root) and os.path.isdir(local_hooks_path):
-        src_file = os.path.join(config.CONFIG_DIR, config.HOOK_FILENAME)
-        dst_file = get_local_hook_path()
+    if check_exists(git_local_root) and os.path.isdir(local_hooks_path):
+        src_file = get_hook_path(Filetype.SHARED)
+        dst_file = get_hook_path(Filetype.LOCAL)
+        logging.debug(
+            f"Copying shared hook file to local destination:\n"
+            f"{src_file} >>> {dst_file}"
+        )
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
-        db_file = os.path.join(config.CONFIG_DIR, config.DATABASE_FILE)
-        db_link = get_local_db_path()
+
+        db_file = get_db_path(Filetype.SHARED)
+        db_link = get_db_path(Filetype.LOCAL)
+        logging.debug(
+            f"Linking shared db file to local destination:\n" f"{db_file} >>> {db_link}"
+        )
         force_symlink(db_file, db_link)
+
         note("✨ 🍒 ✨ Installed for current repository!", bold=True)
     else:
         warn("🍄 Not a git repository.")
@@ -81,13 +93,23 @@ def global_install(position, template):
     )
     info(confirm_info)
     if click.confirm("Do you want to continue?", abort=True):
-        src_file = os.path.join(config.CONFIG_DIR, config.HOOK_FILENAME)
-        dst_file = os.path.join(config.GLOBAL_HOOKS_DIR, config.HOOK_FILENAME)
+        src_file = get_hook_path(Filetype.SHARED)
+        dst_file = get_hook_path(Filetype.GLOBAL)
+        logging.debug(
+            f"Copying shared hook file to global destination:\n"
+            f"{src_file} >>> {dst_file}"
+        )
         shutil.copyfile(src_file, dst_file)
         os.chmod(dst_file, 0o0775)
-        db_file = os.path.join(config.CONFIG_DIR, config.DATABASE_FILE)
-        db_link = os.path.join(config.GLOBAL_HOOKS_DIR, config.DATABASE_FILE)
+
+        db_file = get_db_path(Filetype.SHARED)
+        db_link = get_db_path(Filetype.GLOBAL)
+        logging.debug(
+            f"Linking shared db file to global destination:\n"
+            f"{db_file} >>> {db_link}"
+        )
         force_symlink(db_file, db_link)
+
         set_git_global_hooks_path(config.GLOBAL_HOOKS_DIR)
         note("✨ 🍒 ✨ Installed globally for all repositories!", bold=True)
 
@@ -110,10 +132,9 @@ def remove(ctx):
     help="Uninstall podmena for current git repository",
 )
 def local_uninstall():
-    git_local_root = os.path.join(os.getcwd(), ".git")
-    hook_filepath = os.path.join(git_local_root, "hooks", config.HOOK_FILENAME)
-    db_link = os.path.join(git_local_root, "hooks", config.DATABASE_FILE)
-    if os.path.exists(hook_filepath):
+    hook_filepath = get_hook_path(Filetype.LOCAL)
+    db_link = get_db_path(Filetype.LOCAL)
+    if check_exists(hook_filepath):
         safe_delete(hook_filepath)
         safe_delete(db_link)
         info("💥 🚫 💥 Uninstalled for current repository.", bold=True)
@@ -149,7 +170,7 @@ def status():
         local_hooks_path = os.path.join(git_root_dir, ".git", "hooks")
         database_path = os.path.join(local_hooks_path, config.DATABASE_FILE)
         hook_path = os.path.join(local_hooks_path, config.HOOK_FILENAME)
-        if os.path.exists(database_path) and os.path.exists(hook_path):
+        if check_exists(database_path) and check_exists(hook_path):
             note("✨ podmena is activated for current repository.")
             active = True
 

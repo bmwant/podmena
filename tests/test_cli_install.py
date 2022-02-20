@@ -3,8 +3,9 @@ from unittest.mock import patch
 
 from podmena import cli, config
 from podmena.utils import (
-    get_local_db_path,
-    get_local_hook_path,
+    Filetype,
+    get_db_path,
+    get_hook_path,
 )
 
 
@@ -14,10 +15,10 @@ def test_install_local(runner):
     assert result.exit_code == 0
     assert result.output == "✨ 🍒 ✨ Installed for current repository!\n"
 
-    hook_file_path = get_local_hook_path()
+    hook_file_path = get_hook_path(Filetype.LOCAL)
     assert os.path.exists(hook_file_path)
 
-    db_file_path = get_local_db_path()
+    db_file_path = get_db_path(Filetype.LOCAL)
     assert os.path.exists(db_file_path)
 
 
