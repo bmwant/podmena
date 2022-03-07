@@ -96,3 +96,5 @@ Thanks [@kakovskyi](https://github.com/kakovskyi) working for Atlassian!
 ### Say thanks!
 
 🐶 `D7DA74qzZUyh9cctCxWovPTEovUSjGzL2S` this is [Dogecoin](https://dogecoin.com/) wallet to support the project.
+
+🇺🇦 We would also thank the Armed Forces of Ukraine for providing security to perform this work. This work has become possible only because of resilience and courage of the Ukrainian Army.
